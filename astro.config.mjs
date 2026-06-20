@@ -18,7 +18,7 @@ function remarkMermaid() {
 }
 
 export default defineConfig({
-  site: 'https://codogotchipfordummies.vercel.app',
+  site: 'https://codogotchifordummies.vercel.app',
   markdown: {
     remarkPlugins: [remarkMermaid],
   },
