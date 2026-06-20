@@ -156,16 +156,16 @@ h1, h2, h3, h4 {
   background-color: var(--cg-cream-dim);
 }
 
-/* Group labels (Home, Core pipeline, Hands-on, Reference) */
+/* Group labels (Home, Core pipeline, Hands-on, Reference) — all viewports */
 :root[data-theme='light'] .group-label,
+:root[data-theme='light'] .group-label span,
+:root[data-theme='light'] .group-label .large,
 :root[data-theme='light'] [class*='group-label'],
-:root[data-theme='light'] nav.sidebar summary,
-:root[data-theme='light'] nav.sidebar details > summary,
-:root[data-theme='light'] .sidebar-content summary,
-:root[data-theme='light'] .sidebar-content details > summary,
-:root[data-theme='light'] nav.sidebar a[href='/'],
-:root[data-theme='light'] .sidebar-content a[href='/'] {
-  color: oklch(34.63% 0.1007 44.03) !important; /* #622300 on-primary-container */
+:root[data-theme='light'] [class*='group-label'] span,
+:root[data-theme='light'] summary .group-label,
+:root[data-theme='light'] summary .large,
+:root[data-theme='light'] a[href='/'] {
+  color: oklch(34.63% 0.1007 44.03) !important; /* #622300 */
   font-weight: 700 !important;
 }
 
