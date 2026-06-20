@@ -123,6 +123,33 @@
   background-size: 22px 22px;
 }
 
+/* ── Card grid (splash page) ─────────────────────────────────────────────── */
+/* Starlight bakes --sl-color-black into article.card bg; override in light mode */
+:root[data-theme='light'] article.card {
+  background-color: oklch(94.88% 0.0153 77.07);  /* surface-container */
+  border: 2px solid oklch(83.08% 0.0344 43.47);  /* outline-variant */
+  box-shadow: 3px 3px 0 0 oklch(36.65% 0.0236 42.93); /* charcoal-ink sticker shadow */
+}
+
+:root[data-theme='light'] article.card * {
+  color: oklch(22.37% 0.0105 80.58);
+}
+
+:root[data-theme='light'] article.card strong,
+:root[data-theme='light'] article.card h2 {
+  color: oklch(34.63% 0.1007 44.03); /* on-primary-container dark terracotta */
+}
+
+/* ── Search bar (nav) ────────────────────────────────────────────────────── */
+:root[data-theme='light'] [data-open-modal],
+:root[data-theme='light'] site-search button,
+:root[data-theme='light'] .search-item,
+:root[data-theme='light'] [class*="search"] > button {
+  background-color: oklch(91.47% 0.0149 80.71) !important; /* surface-variant */
+  border: 1px solid oklch(83.08% 0.0344 43.47) !important;
+  color: oklch(39.81% 0.0309 42.86) !important;
+}
+
 /* ── Sidebar nav — warm tint on active item ───────────────────────────────── */
 .sidebar-content a[aria-current='page'],
 nav a[aria-current='page'] {
