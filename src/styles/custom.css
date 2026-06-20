@@ -126,28 +126,15 @@ h1, h2, h3, h4 {
   border-radius: 8px !important;
 }
 
-/* Open dropdown — Starlight uses --sl-color-black as bg; override to cream */
-:root[data-theme='light'] mobile-toc,
-:root[data-theme='light'] mobile-toc details,
-:root[data-theme='light'] mobile-toc details[open],
-:root[data-theme='light'] mobile-toc details > :not(summary),
-:root[data-theme='light'] mobile-toc ul,
-:root[data-theme='light'] mobile-toc li,
-:root[data-theme='light'] starlight-toc details > :not(summary),
-:root[data-theme='light'] starlight-toc ul {
-  background-color: var(--cg-cream) !important;
-  color: var(--cg-text) !important;
+/* Open dropdown — bg stays dark (Starlight intent); fix non-active link text.
+   Active item ("Overview") already renders cream via --sl-color-white.
+   Non-active items use --sl-color-text (our dark charcoal) → invisible on dark bg. */
+:root[data-theme='light'] details:has(span.toggle) > :not(summary) a,
+:root[data-theme='light'] details:has(span.toggle) li a {
+  color: var(--cg-cream) !important;
 }
-
-/* TOC links inside the open dropdown */
-:root[data-theme='light'] mobile-toc a,
-:root[data-theme='light'] mobile-toc li a,
-:root[data-theme='light'] starlight-toc a {
-  color: var(--cg-text) !important;
-}
-:root[data-theme='light'] mobile-toc a[aria-current='true'],
-:root[data-theme='light'] starlight-toc a[aria-current='true'] {
-  color: var(--cg-terracotta) !important;
+:root[data-theme='light'] details:has(span.toggle) a[aria-current='true'] {
+  color: var(--cg-saffron) !important;
   font-weight: 700;
 }
 
