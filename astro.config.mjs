@@ -27,7 +27,6 @@ export default defineConfig({
       title: 'Codogotchi for Dummies',
       description: "A TS/FP developer's field guide to the Codogotchi macOS menubar app.",
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/cesarnml/codogotchi-app-on-boarding-for-dummies' }],
-      favicon: '/favicon.webp',
       head: [
         { tag: 'link', attrs: { rel: 'icon', type: 'image/webp', href: '/favicon.webp' } },
         {
