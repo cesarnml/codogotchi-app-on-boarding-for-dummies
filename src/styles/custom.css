@@ -332,3 +332,31 @@ div.mermaid {
   --pagefind-ui-border:     var(--cg-ink-lt);
   --pagefind-ui-tag:        var(--cg-terracotta-bg);
 }
+
+/* ── Mobile theme toggle ─────────────────────────────────────────────────── */
+.mobile-theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--sl-color-text);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.mobile-theme-toggle:hover {
+  color: var(--cg-terracotta);
+}
+.mobile-theme-toggle .icon-sun,
+.mobile-theme-toggle .icon-moon {
+  display: none;
+}
+:root[data-theme='dark'] .mobile-theme-toggle .icon-sun  { display: block; }
+:root[data-theme='light'] .mobile-theme-toggle .icon-moon { display: block; }
+@media (min-width: 50rem) {
+  .mobile-theme-toggle { display: none; }
+}

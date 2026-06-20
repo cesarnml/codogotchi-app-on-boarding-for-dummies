@@ -24,6 +24,9 @@ export default defineConfig({
   },
   integrations: [
     starlight({
+      components: {
+        Header: './src/components/starlight/Header.astro',
+      },
       customCss: ['./src/styles/custom.css'],
       title: 'Codogotchi for Dummies',
       description: "A field guide to Codogotchi for TypeScript & FP developers — learn the Swift/AppKit architecture, data flow, and contribute to v2. Works with Claude Code, Codex, Cursor, Copilot, and Antigravity.",
