@@ -1,0 +1,37 @@
+---
+title: Codogotchi for Dummies
+description: A TypeScript / FP developer's guide to the Codogotchi macOS menubar app (Swift / AppKit).
+template: splash
+hero:
+  title: Codogotchi for Dummies
+  tagline: A TypeScript / FP developer's field guide to the Codogotchi macOS menubar app — built so you can drive v2 (per-platform multi-pet), not just admire the code.
+  actions:
+    - text: Start reading →
+      link: /01-the-big-picture/
+      icon: right-arrow
+      variant: primary
+    - text: Jump to challenges
+      link: /07-challenges/
+      icon: rocket
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## The one-sentence mental model
+
+> **The Swift app is a pure-ish render function over a file on disk.** A separate process (the CLI hook) writes `~/.codogotchi/state.json`; the app polls that file once a second and turns whatever it reads into pixels. In FP terms: `render : StateOnDisk → (MenubarIcon, FloatingPet?)` — run at 1 Hz.
+
+<CardGrid>
+  <Card title="Core pipeline (01–06)" icon="open-book">
+    Maps the state → render spine you need to understand v2. Read in order — each chapter ends with a "prove it to yourself" exercise.
+  </Card>
+  <Card title="Hands-on challenges (07)" icon="rocket">
+    14 challenges with tiered hints, ordered easy → hard. Where reading turns into knowing.
+  </Card>
+  <Card title="macOS primitives (09–11)" icon="laptop">
+    Dev helpers, platform APIs (NSPanel, SpriteKit, AppKit), and the procedural-effects engine that makes her alive without new sprites.
+  </Card>
+  <Card title="Swift for TS devs (05)" icon="translate">
+    Maps every Swift idiom you'll trip over — `@MainActor`, `weak self`, protocols, `Result` — to a TypeScript equivalent you already know.
+  </Card>
+</CardGrid>
