@@ -315,6 +315,7 @@ div.mermaid {
 /* ── Prev / Next pagination links ────────────────────────────────────────── */
 :root[data-theme='light'] .pagination-links a {
   color: var(--cg-text) !important;
+  background-color: var(--cg-cream) !important;
 }
 :root[data-theme='light'] .pagination-links a .link-title {
   color: var(--cg-terracotta) !important;
