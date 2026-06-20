@@ -1,229 +1,287 @@
 /*
  * Codogotchi "Cute Thai Cartoon" theme for Starlight.
- * Palette mirrors web/src/styles/global.css — OKLCH values are canonical,
- * hex comments are the sRGB originals for reference.
+ * Design reference: codogotchi.app — warm cream, charcoal ink borders,
+ * hard 4px offset box-shadows, terracotta primary, sticker-card aesthetic.
  */
 
 /* ── Fonts ────────────────────────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ── Light mode ───────────────────────────────────────────────────────────── */
-:root[data-theme='light'] {
-  /* backgrounds */
-  --sl-color-bg:             oklch(98.24% 0.013  71.33); /* #fff8f0 cream */
-  --sl-color-bg-sidebar:     oklch(94.88% 0.0153 77.07); /* #f4ede3 */
-  --sl-color-bg-inline-code: oklch(91.47% 0.0149 80.71); /* #e8e2d8 */
-  --sl-color-bg-nav:         oklch(98.24% 0.013  71.33);
-  --sl-color-bg-badge:       oklch(71.93% 0.1506 44.79); /* primary-container */
-
-  /* text */
-  --sl-color-text:           oklch(22.37% 0.0105 80.58); /* #1e1b16 charcoal */
-  --sl-color-text-accent:    oklch(49.56% 0.1328 44.15); /* #9d4313 terracotta */
-  --sl-color-text-invert:    oklch(100% 0 89.88);
-
-  /* accent (terracotta) */
-  --sl-color-accent:         oklch(49.56% 0.1328 44.15); /* #9d4313 */
-  --sl-color-accent-high:    oklch(34.63% 0.1007 44.03); /* #622300 */
-  --sl-color-accent-low:     oklch(91.78% 0.0445 42.42); /* #ffdbcd */
-
-  /* grays — mapped to warm-tinted surface scale */
-  --sl-color-gray-1:         oklch(22.37% 0.0105 80.58); /* on-surface */
-  --sl-color-gray-2:         oklch(39.81% 0.0309 42.86); /* on-surface-variant */
-  --sl-color-gray-3:         oklch(57.13% 0.0321 42.51); /* outline */
-  --sl-color-gray-4:         oklch(83.08% 0.0344 43.47); /* outline-variant */
-  --sl-color-gray-5:         oklch(91.47% 0.0149 80.71); /* surface-variant */
-  --sl-color-gray-6:         oklch(94.88% 0.0153 77.07); /* surface-container */
-  --sl-color-gray-7:         oklch(98.24% 0.013  71.33); /* surface */
-
-  --sl-color-hairline-light:  oklch(83.08% 0.0344 43.47);
-  --sl-color-hairline-medium: oklch(57.13% 0.0321 42.51);
-  --sl-color-hairline-shade:  oklch(39.81% 0.0309 42.86);
-
-  --sl-color-white: oklch(100% 0 89.88);
-  --sl-color-black: oklch(22.37% 0.0105 80.58);
-}
-
-/* ── Dark mode ────────────────────────────────────────────────────────────── */
-:root[data-theme='dark'] {
-  --sl-color-bg:             oklch(21.78% 0 89.88);       /* #1a1a1a terminal-void */
-  --sl-color-bg-sidebar:     oklch(31.02% 0.0113 84.59);  /* #33302a */
-  --sl-color-bg-inline-code: oklch(36.65% 0.0236 42.93);  /* #4a3b35 charcoal-ink */
-  --sl-color-bg-nav:         oklch(21.78% 0 89.88);
-  --sl-color-bg-badge:       oklch(40.87% 0.1193 43.79);
-
-  --sl-color-text:           oklch(95.79% 0.0153 77.07);  /* #f7f0e6 */
-  --sl-color-text-accent:    oklch(83.55% 0.0965 43.63);  /* #ffb596 inverse-primary */
-  --sl-color-text-invert:    oklch(22.37% 0.0105 80.58);
-
-  --sl-color-accent:         oklch(71.93% 0.1506 44.79);  /* #f0824e */
-  --sl-color-accent-high:    oklch(83.55% 0.0965 43.63);  /* #ffb596 */
-  --sl-color-accent-low:     oklch(36.65% 0.0236 42.93);  /* #4a3b35 */
-
-  --sl-color-gray-1:         oklch(95.79% 0.0153 77.07);
-  --sl-color-gray-2:         oklch(83.08% 0.0344 43.47);
-  --sl-color-gray-3:         oklch(57.13% 0.0321 42.51);
-  --sl-color-gray-4:         oklch(39.81% 0.0309 42.86);
-  --sl-color-gray-5:         oklch(36.65% 0.0236 42.93);
-  --sl-color-gray-6:         oklch(31.02% 0.0113 84.59);
-  --sl-color-gray-7:         oklch(21.78% 0 89.88);
-
-  --sl-color-hairline-light:  oklch(39.81% 0.0309 42.86);
-  --sl-color-hairline-medium: oklch(57.13% 0.0321 42.51);
-  --sl-color-hairline-shade:  oklch(83.08% 0.0344 43.47);
-
-  --sl-color-white: oklch(95.79% 0.0153 77.07);
-  --sl-color-black: oklch(21.78% 0 89.88);
-}
-
-/* ── Typography ───────────────────────────────────────────────────────────── */
+/* ── Design tokens ────────────────────────────────────────────────────────── */
 :root {
+  --cg-cream:         oklch(98.24% 0.013  71.33);  /* #fff8f0 */
+  --cg-cream-dim:     oklch(94.88% 0.0153 77.07);  /* #f4ede3 */
+  --cg-cream-dimmer:  oklch(91.47% 0.0149 80.71);  /* #e8e2d8 */
+  --cg-terracotta:    oklch(49.56% 0.1328 44.15);  /* #9d4313 */
+  --cg-terracotta-lt: oklch(71.93% 0.1506 44.79);  /* #f0824e */
+  --cg-terracotta-bg: oklch(91.78% 0.0445 42.42);  /* #ffdbcd */
+  --cg-ink:           oklch(36.65% 0.0236 42.93);  /* #4a3b35 charcoal */
+  --cg-ink-mid:       oklch(57.13% 0.0321 42.51);  /* #897269 */
+  --cg-ink-lt:        oklch(83.08% 0.0344 43.47);  /* #dcc1b6 */
+  --cg-void:          oklch(21.78% 0 89.88);        /* #1a1a1a */
+  --cg-text:          oklch(22.37% 0.0105 80.58);  /* #1e1b16 */
+  --cg-text-lt:       oklch(95.79% 0.0153 77.07);  /* #f7f0e6 */
+  --cg-saffron:       oklch(81.59% 0.145  72.11);  /* #fcb24a */
+  --cg-teal:          oklch(47.48% 0.081  203.98); /* #006971 */
+
+  /* sticker shadow — charcoal hard offset, no blur */
+  --cg-shadow:    4px 4px 0 0 var(--cg-ink);
+  --cg-shadow-sm: 2px 2px 0 0 var(--cg-ink);
+
   --sl-font:      'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif;
   --sl-font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
-.sl-markdown-content h1,
-.sl-markdown-content h2,
-.sl-markdown-content h3,
-.sl-markdown-content h4,
-.site-title,
-.hero h1,
-[class*='Hero'] h1 {
-  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+/* ── Starlight color tokens — light ──────────────────────────────────────── */
+:root[data-theme='light'] {
+  --sl-color-bg:             var(--cg-cream);
+  --sl-color-bg-sidebar:     var(--cg-cream-dim);
+  --sl-color-bg-nav:         var(--cg-cream);
+  --sl-color-bg-inline-code: var(--cg-terracotta-bg);
+  --sl-color-text:           var(--cg-text);
+  --sl-color-text-accent:    var(--cg-terracotta);
+  --sl-color-accent:         var(--cg-terracotta);
+  --sl-color-accent-high:    oklch(34.63% 0.1007 44.03);
+  --sl-color-accent-low:     var(--cg-terracotta-bg);
+  --sl-color-white:          var(--cg-cream);
+  --sl-color-black:          var(--cg-text);
+  --sl-color-gray-1:         var(--cg-text);
+  --sl-color-gray-2:         oklch(39.81% 0.0309 42.86);
+  --sl-color-gray-3:         var(--cg-ink-mid);
+  --sl-color-gray-4:         var(--cg-ink-lt);
+  --sl-color-gray-5:         var(--cg-cream-dimmer);
+  --sl-color-gray-6:         var(--cg-cream-dim);
+  --sl-color-gray-7:         var(--cg-cream);
+  --sl-color-hairline-light:  var(--cg-ink-lt);
+  --sl-color-hairline-medium: var(--cg-ink-mid);
+}
+
+/* ── Starlight color tokens — dark ───────────────────────────────────────── */
+:root[data-theme='dark'] {
+  --sl-color-bg:             var(--cg-void);
+  --sl-color-bg-sidebar:     oklch(27% 0.012 80);
+  --sl-color-bg-nav:         var(--cg-void);
+  --sl-color-bg-inline-code: oklch(30% 0.02 44);
+  --sl-color-text:           var(--cg-text-lt);
+  --sl-color-text-accent:    oklch(83.55% 0.0965 43.63);  /* inverse-primary */
+  --sl-color-accent:         var(--cg-terracotta-lt);
+  --sl-color-accent-high:    oklch(83.55% 0.0965 43.63);
+  --sl-color-accent-low:     oklch(32% 0.022 44);
+  --sl-color-white:          var(--cg-text-lt);
+  --sl-color-black:          var(--cg-void);
+  --sl-color-gray-1:         var(--cg-text-lt);
+  --sl-color-gray-2:         oklch(80% 0.03 44);
+  --sl-color-gray-3:         var(--cg-ink-mid);
+  --sl-color-gray-4:         oklch(38% 0.024 44);
+  --sl-color-gray-5:         oklch(30% 0.018 44);
+  --sl-color-gray-6:         oklch(27% 0.012 80);
+  --sl-color-gray-7:         var(--cg-void);
+  --sl-color-hairline-light:  oklch(34% 0.022 44);
+  --sl-color-hairline-medium: var(--cg-ink-mid);
+}
+
+/* ── Typography ───────────────────────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif !important;
   font-weight: 700;
   letter-spacing: -0.01em;
 }
 
-/* Starlight uses --sl-color-white for heading text in both modes;
-   force dark in light mode so they're readable on cream. */
 :root[data-theme='light'] h1,
 :root[data-theme='light'] h2,
 :root[data-theme='light'] h3,
 :root[data-theme='light'] h4 {
-  color: oklch(22.37% 0.0105 80.58); /* on-surface charcoal */
-  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  color: var(--cg-text) !important;
 }
 
-/* Right-column "On this page" headings */
-:root[data-theme='light'] .right-sidebar-panel * {
-  color: oklch(22.37% 0.0105 80.58);
-}
-
-/* Breadcrumb / page header strip */
-:root[data-theme='light'] .sl-breadcrumbs,
-:root[data-theme='light'] [class*='breadcrumb'] {
-  color: oklch(39.81% 0.0309 42.86);
-}
-
-/* ── Paper dot-grid background (light only) ───────────────────────────────── */
+/* ── Paper dot-grid — light only ─────────────────────────────────────────── */
 :root[data-theme='light'] body {
-  background-image: radial-gradient(
-    oklch(83.08% 0.0344 43.47) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(var(--cg-ink-lt) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 
-/* ── Card grid (splash page) ─────────────────────────────────────────────── */
-/* Starlight bakes --sl-color-black into article.card bg; override in light mode */
-:root[data-theme='light'] article.card {
-  background-color: oklch(94.88% 0.0153 77.07);  /* surface-container */
-  border: 2px solid oklch(83.08% 0.0344 43.47);  /* outline-variant */
-  box-shadow: 3px 3px 0 0 oklch(36.65% 0.0236 42.93); /* charcoal-ink sticker shadow */
+/* ── Site header ─────────────────────────────────────────────────────────── */
+:root[data-theme='light'] header.header {
+  background-color: var(--cg-cream);
+  border-bottom: 2px solid var(--cg-ink);
+}
+:root[data-theme='dark'] header.header {
+  border-bottom: 2px solid oklch(34% 0.022 44);
 }
 
-:root[data-theme='light'] article.card * {
-  color: oklch(22.37% 0.0105 80.58);
+/* Site title — terracotta in both modes */
+.site-title {
+  color: var(--cg-terracotta) !important;
+  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif !important;
+  font-weight: 800 !important;
 }
 
-:root[data-theme='light'] article.card strong,
-:root[data-theme='light'] article.card h2 {
-  color: oklch(34.63% 0.1007 44.03); /* on-primary-container dark terracotta */
-}
-
-/* ── Search bar (nav) ────────────────────────────────────────────────────── */
+/* ── Search bar ───────────────────────────────────────────────────────────── */
 :root[data-theme='light'] [data-open-modal],
-:root[data-theme='light'] site-search button,
-:root[data-theme='light'] .search-item,
-:root[data-theme='light'] [class*="search"] > button {
-  background-color: oklch(91.47% 0.0149 80.71) !important; /* surface-variant */
-  border: 1px solid oklch(83.08% 0.0344 43.47) !important;
-  color: oklch(39.81% 0.0309 42.86) !important;
+:root[data-theme='light'] site-search > label {
+  background-color: var(--cg-cream-dimmer) !important;
+  border: 1.5px solid var(--cg-ink-lt) !important;
+  color: var(--cg-ink-mid) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
 }
 
-/* ── Sidebar nav — warm tint on active item ───────────────────────────────── */
+/* ── Sidebar ──────────────────────────────────────────────────────────────── */
+:root[data-theme='light'] .sidebar-content {
+  border-right: 2px solid var(--cg-ink-lt);
+}
+:root[data-theme='light'] nav.sidebar {
+  background-color: var(--cg-cream-dim);
+}
+
+/* Active item — sticker highlight */
 .sidebar-content a[aria-current='page'],
 nav a[aria-current='page'] {
-  background-color: oklch(91.78% 0.0445 42.42); /* primary-fixed */
-  color: oklch(34.63% 0.1007 44.03) !important; /* on-primary-container */
-  border-left: 3px solid oklch(49.56% 0.1328 44.15); /* terracotta */
-  font-weight: 600;
+  background-color: var(--cg-terracotta-bg) !important;
+  color: oklch(34.63% 0.1007 44.03) !important;
+  border-left: 3px solid var(--cg-terracotta) !important;
+  font-weight: 700 !important;
 }
-
 :root[data-theme='dark'] .sidebar-content a[aria-current='page'],
 :root[data-theme='dark'] nav a[aria-current='page'] {
-  background-color: oklch(36.65% 0.0236 42.93); /* charcoal-ink */
-  color: oklch(83.55% 0.0965 43.63) !important; /* inverse-primary */
-  border-left: 3px solid oklch(71.93% 0.1506 44.79);
+  background-color: oklch(32% 0.08 44 / 0.5) !important;
+  color: oklch(83.55% 0.0965 43.63) !important;
+  border-left-color: var(--cg-terracotta-lt) !important;
 }
 
-/* ── Inline code ─────────────────────────────────────────────────────────── */
+/* ── Hero CTA buttons (splash page) ──────────────────────────────────────── */
+/* Primary button — terracotta fill + charcoal outline + sticker shadow */
+a.sl-link-button.primary,
+.sl-link-button[data-variant='primary'],
+[class*='HeroActions'] a:first-child {
+  background-color: var(--cg-terracotta) !important;
+  color: #fff !important;
+  border: 2px solid var(--cg-ink) !important;
+  box-shadow: var(--cg-shadow) !important;
+  border-radius: 8px !important;
+  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+a.sl-link-button.primary:hover,
+.sl-link-button[data-variant='primary']:hover {
+  transform: translate(2px, 2px) !important;
+  box-shadow: var(--cg-shadow-sm) !important;
+}
+a.sl-link-button.primary:active,
+.sl-link-button[data-variant='primary']:active {
+  transform: translate(4px, 4px) !important;
+  box-shadow: none !important;
+}
+
+/* Secondary button — cream outline */
+a.sl-link-button:not(.primary),
+.sl-link-button[data-variant='minimal'] {
+  background-color: transparent !important;
+  border: 2px solid var(--cg-ink) !important;
+  color: var(--cg-ink) !important;
+  box-shadow: var(--cg-shadow) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+:root[data-theme='dark'] a.sl-link-button:not(.primary) {
+  border-color: oklch(60% 0.04 44) !important;
+  color: var(--cg-text-lt) !important;
+  box-shadow: 4px 4px 0 0 oklch(60% 0.04 44) !important;
+}
+a.sl-link-button:not(.primary):hover {
+  transform: translate(2px, 2px) !important;
+  box-shadow: var(--cg-shadow-sm) !important;
+}
+
+/* ── Cards (splash CardGrid) ──────────────────────────────────────────────── */
+article.card {
+  border: 2px solid var(--cg-ink) !important;
+  box-shadow: var(--cg-shadow) !important;
+  border-radius: 8px !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+}
+article.card:hover {
+  transform: translate(2px, 2px) !important;
+  box-shadow: var(--cg-shadow-sm) !important;
+}
+
+:root[data-theme='light'] article.card {
+  background-color: #fff !important;
+}
+:root[data-theme='dark'] article.card {
+  background-color: oklch(27% 0.012 80) !important;
+  border-color: oklch(40% 0.028 44) !important;
+  box-shadow: 4px 4px 0 0 oklch(40% 0.028 44) !important;
+}
+
+:root[data-theme='light'] article.card,
+:root[data-theme='light'] article.card p {
+  color: var(--cg-text) !important;
+}
+
+/* ── Blockquote ───────────────────────────────────────────────────────────── */
+.sl-markdown-content blockquote {
+  border-left: 4px solid var(--cg-terracotta) !important;
+  border-radius: 0 6px 6px 0;
+  padding: 0.75rem 1rem;
+}
+:root[data-theme='light'] .sl-markdown-content blockquote {
+  background: var(--cg-terracotta-bg);
+  color: var(--cg-text);
+}
+:root[data-theme='dark'] .sl-markdown-content blockquote {
+  background: oklch(30% 0.05 44 / 0.4);
+  border-left-color: var(--cg-terracotta-lt) !important;
+}
+
+/* ── Inline code ──────────────────────────────────────────────────────────── */
 :root[data-theme='light'] .sl-markdown-content :not(pre) > code {
-  background-color: oklch(91.78% 0.0445 42.42); /* primary-fixed */
-  color: oklch(34.63% 0.1007 44.03);            /* on-primary-container */
-  border: 1px solid oklch(83.08% 0.0344 43.47);
+  background-color: var(--cg-terracotta-bg);
+  color: oklch(34.63% 0.1007 44.03);
+  border: 1px solid var(--cg-ink-lt);
   border-radius: 4px;
   padding: 0.1em 0.35em;
 }
 
-/* ── Sticker-style callout/aside cards ───────────────────────────────────── */
+/* ── Asides / callout cards ───────────────────────────────────────────────── */
 :root[data-theme='light'] .starlight-aside {
-  border: 2px solid oklch(36.65% 0.0236 42.93); /* charcoal-ink */
-  box-shadow: 3px 3px 0 0 oklch(36.65% 0.0236 42.93);
+  border: 2px solid var(--cg-ink) !important;
+  box-shadow: var(--cg-shadow-sm) !important;
   border-radius: 6px;
-}
-
-/* ── Site header / nav bar ───────────────────────────────────────────────── */
-header.header {
-  border-bottom: 2px solid oklch(83.08% 0.0344 43.47);
-}
-
-:root[data-theme='dark'] header.header {
-  border-bottom: 2px solid oklch(39.81% 0.0309 42.86);
-}
-
-/* ── Pagefind search ─────────────────────────────────────────────────────── */
-:root[data-theme='light'] {
-  --pagefind-ui-primary:    oklch(49.56% 0.1328 44.15);
-  --pagefind-ui-text:       oklch(22.37% 0.0105 80.58);
-  --pagefind-ui-background: oklch(98.24% 0.013  71.33);
-  --pagefind-ui-border:     oklch(83.08% 0.0344 43.47);
-  --pagefind-ui-tag:        oklch(91.78% 0.0445 42.42);
 }
 
 /* ── Mermaid diagrams ────────────────────────────────────────────────────── */
 div.mermaid {
-  background: oklch(94.88% 0.0153 77.07);
-  border: 2px solid oklch(83.08% 0.0344 43.47);
+  border: 2px solid var(--cg-ink-lt);
   border-radius: 8px;
   padding: 1.5rem;
   margin: 1.5rem 0;
   overflow-x: auto;
 }
-
+:root[data-theme='light'] div.mermaid {
+  background: var(--cg-cream-dim);
+}
 :root[data-theme='dark'] div.mermaid {
-  background: oklch(31.02% 0.0113 84.59);
-  border-color: oklch(39.81% 0.0309 42.86);
+  background: oklch(27% 0.012 80);
+  border-color: oklch(38% 0.024 44);
 }
 
-/* ── TS-analogy / Gotcha / Prove-it callout emoji markers ────────────────── */
-.sl-markdown-content blockquote {
-  border-left: 4px solid oklch(71.93% 0.1506 44.79); /* primary-container */
-  background: oklch(91.78% 0.0445 42.42 / 0.4);
-  border-radius: 0 6px 6px 0;
-  padding: 0.75rem 1rem;
+/* ── Squiggle divider — matches codogotchi.app ───────────────────────────── */
+.sl-markdown-content hr {
+  border: none;
+  height: 12px;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6 Q10 0 20 6 T40 6' fill='none' stroke='%234a3b35' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  margin: 2rem 0;
 }
 
-:root[data-theme='dark'] .sl-markdown-content blockquote {
-  border-left-color: oklch(71.93% 0.1506 44.79);
-  background: oklch(36.65% 0.0236 42.93 / 0.5);
+/* ── Pagefind search modal ───────────────────────────────────────────────── */
+:root[data-theme='light'] {
+  --pagefind-ui-primary:    var(--cg-terracotta);
+  --pagefind-ui-text:       var(--cg-text);
+  --pagefind-ui-background: var(--cg-cream);
+  --pagefind-ui-border:     var(--cg-ink-lt);
+  --pagefind-ui-tag:        var(--cg-terracotta-bg);
 }
