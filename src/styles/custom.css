@@ -312,6 +312,17 @@ div.mermaid {
   margin: 2rem 0;
 }
 
+/* ── Prev / Next pagination links ────────────────────────────────────────── */
+:root[data-theme='light'] .pagination-links a {
+  color: var(--cg-text) !important;
+}
+:root[data-theme='light'] .pagination-links a .link-title {
+  color: var(--cg-terracotta) !important;
+}
+:root[data-theme='light'] .pagination-links a:hover {
+  border-color: var(--cg-terracotta) !important;
+}
+
 /* ── Pagefind search modal ───────────────────────────────────────────────── */
 :root[data-theme='light'] {
   --pagefind-ui-primary:    var(--cg-terracotta);
