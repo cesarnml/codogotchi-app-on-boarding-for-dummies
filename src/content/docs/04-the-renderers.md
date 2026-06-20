@@ -29,7 +29,7 @@ flowchart TD
 
 ## The fan-out itself
 
-[`PetStateFanout.swift`](../../../apps/menubar/Sources/PetStateFanout.swift) is
+[`PetStateFanout.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/PetStateFanout.swift) is
 tiny (26 lines) and worth reading whole:
 
 ```swift
@@ -66,7 +66,7 @@ A "pet" is **one big image (a spritesheet) sliced into a grid of frames**. Each
 *row* is one animation; each *column* a frame in that animation.
 
 ### `CodexPet` — one sheet, 8×9 grid
-[`CodexPet.swift`](../../../apps/menubar/Sources/CodexPet.swift). Loads
+[`CodexPet.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/CodexPet.swift). Loads
 `pet.json` + a WebP sheet, validates it's exactly 8 columns × 9 rows, and exposes
 a hardcoded `ActivityState → RowSpec` map:
 
@@ -85,7 +85,7 @@ number }`; `[ActivityState: RowSpec]` is a `Record<ActivityState, RowSpec>`
 (a `Map`, technically — Swift dictionary).
 
 ### `CodogotchiPet` — three tiered sheets
-[`CodogotchiPet.swift`](../../../apps/menubar/Sources/CodogotchiPet.swift) holds
+[`CodogotchiPet.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/CodogotchiPet.swift) holds
 up to **three** sheets and resolves a state by trying them in order:
 
 1. **SoA sheet** (`soaRowMap`) — the premium delivery-gate animations.
@@ -101,7 +101,7 @@ soft-degraded — `init` still succeeds, the pet just renders fewer states.
 
 ### Resolution across both pets (the renderer's job)
 `MenubarRenderer.resolveFrames(for:)`
-([line 125](../../../apps/menubar/Sources/MenubarRenderer.swift)) layers them:
+([line 125](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarRenderer.swift#L125)) layers them:
 
 ```
 CodogotchiPet (SoA → Lite-Enhanced → Lite-Basic)   ← try first
@@ -119,7 +119,7 @@ instinct as `unknown → idle` in Chapter 02, now at the *art* layer.
 
 ## Render target A: the menu bar (static)
 
-[`MenubarRenderer.swift`](../../../apps/menubar/Sources/MenubarRenderer.swift).
+[`MenubarRenderer.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarRenderer.swift).
 Key facts:
 
 - It paints **one static "hero" frame** per state (`heroFrameIndex = 3`), **not
@@ -143,7 +143,7 @@ equivalent of passing a render callback instead of importing the DOM.
 Three collaborating types — keep their jobs distinct:
 
 ### `FloatingPetController` — lifecycle
-[`FloatingPetController.swift`](../../../apps/menubar/Sources/FloatingPetController.swift)
+[`FloatingPetController.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetController.swift)
 (185 lines). Owns **whether and where** the floating pet exists:
 - show / hide, and **persist** that choice + the window frame to `app-state.json`.
 - re-clamp the window when the screen layout changes (monitor unplugged, etc.).
@@ -154,7 +154,7 @@ Three collaborating types — keep their jobs distinct:
 pet is on stage and remembers where it stood; it doesn't do the acting.
 
 ### `FloatingPetPanelController` (in `FloatingPetPanel.swift`) — the window + decorations
-[`FloatingPetPanel.swift`](../../../apps/menubar/Sources/FloatingPetPanel.swift)
+[`FloatingPetPanel.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetPanel.swift)
 (2,647 lines — the big one). It owns:
 - the transparent always-on-top `NSPanel` window,
 - the SpriteKit scene inside it,
@@ -174,7 +174,7 @@ hold all 2,647 lines at once — find the section you need via the type list:
 `AnimationBadgePanel`, `FloatingInteractionPolicy`.
 
 ### `FloatingPetScene` — the animation loop
-[`FloatingPetScene.swift`](../../../apps/menubar/Sources/FloatingPetScene.swift)
+[`FloatingPetScene.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift)
 (1,026 lines). A **SpriteKit** `SKScene` — Apple's 2D game framework.
 
 🇹🇸 **TS analogy.** This is your `<canvas>` with a `requestAnimationFrame` loop.
@@ -193,7 +193,7 @@ justified; `FloatingPetPanel`'s is not.
 
 ## VisualMode and the failure look
 
-[`MenubarRenderer.swift:13`](../../../apps/menubar/Sources/MenubarRenderer.swift):
+[`MenubarRenderer.swift:13`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarRenderer.swift#L13):
 
 ```swift
 enum VisualMode: Equatable { case normal; case desaturated }

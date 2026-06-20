@@ -13,7 +13,7 @@ It's a **menu-bar agent** — a macOS app with no Dock icon and no main window,
 just an icon in the top-right menu bar (and an optional floating pet sprite that
 hovers over your desktop). It is configured that way by `LSUIElement = true` in
 `Info.plist` and `app.setActivationPolicy(.accessory)` in
-[`MenubarApp.swift:98`](../../../apps/menubar/Sources/MenubarApp.swift).
+[`MenubarApp.swift:98`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarApp.swift#L98).
 
 🇹🇸 **TS analogy.** Think of an Electron tray app with no `BrowserWindow` — only
 a `Tray` icon and maybe a transparent always-on-top window. Same shape, native.
@@ -99,7 +99,7 @@ Two things to notice now, because they shape everything later:
    RPG hearts/level — are pushed *only to the floating pet*, through separate
    callback "sinks" wired in `MenubarApp`. (You'll see these as
    `driver.applyAttention = …`, `driver.applyPlatform = …` etc. around
-   [`MenubarApp.swift:301`](../../../apps/menubar/Sources/MenubarApp.swift).)
+   [`MenubarApp.swift:301`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarApp.swift#L301).)
 
 ---
 
@@ -112,7 +112,7 @@ and two distinct concepts**:
 |---|---|---|
 | **Written by** | the TS hook (producer) | the Swift app itself |
 | **Contains** | what the *agent* is doing (activity, hearts, level) | what the *app/window* is doing (is the floating pet visible? where is its window? onboarding done? hook install status) |
-| **Code** | `StateSnapshot` in [`ActivityState.swift`](../../../apps/menubar/Sources/ActivityState.swift) | `FloatingAppState` in [`AppState.swift`](../../../apps/menubar/Sources/AppState.swift) |
+| **Code** | `StateSnapshot` in [`ActivityState.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/ActivityState.swift) | `FloatingAppState` in [`AppState.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/AppState.swift) |
 | **Polled?** | yes, 1 Hz | no, read at launch + written on change |
 
 🇹🇸 **TS analogy.** `state.json` is like a server-sent feed you subscribe to.
@@ -165,12 +165,12 @@ settings tab — testable, no AppKit. Ignore them until you care about Settings.
 ## 🧪 Prove it to yourself
 
 1. **Find the heartbeat.** Open `LivePollingDriver.swift`, find `start()`
-   ([line 166](../../../apps/menubar/Sources/LivePollingDriver.swift)). Confirm
+   ([line 166](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L166)). Confirm
    the `Timer` fires `runTick` every `tickInterval` (default `1.0` s). This is
    *the* loop.
 
 2. **Find the fork.** Open `MenubarApp.swift` around
-   [line 228](../../../apps/menubar/Sources/MenubarApp.swift) and read the
+   [line 228](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarApp.swift#L228) and read the
    `PetStateFanout(...)` construction. Identify the two closures: one updates
    `renderer` (menu bar), one updates `floatingPetController` (floating pet).
    That's the fan-out from the diagram, in real code.

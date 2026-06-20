@@ -6,7 +6,7 @@ title: "03 — The Polling Loop"
 > understand the three "smart" transforms it applies (gate elevation, revive
 > window, heart decay) plus the change-gating that keeps it cheap.
 
-File: [`LivePollingDriver.swift`](../../../apps/menubar/Sources/LivePollingDriver.swift)
+File: [`LivePollingDriver.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift)
 (538 lines). This is the brain of the consumer side.
 
 ---
@@ -44,7 +44,7 @@ in RxJS — that fires the side effect only when the value actually changed.
 
 ## One tick, line by line
 
-`runTick()` ([line 202](../../../apps/menubar/Sources/LivePollingDriver.swift)):
+`runTick()` ([line 202](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L202)):
 
 ```swift
 private func runTick() {
@@ -70,7 +70,7 @@ that changed to the screen." That's the entire heartbeat.
 ## `decide()` — the three smart transforms
 
 On a successful read, `decide` doesn't just pass the snapshot through. It applies
-three layered transforms ([lines 256–295](../../../apps/menubar/Sources/LivePollingDriver.swift)):
+three layered transforms ([lines 256–295](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L256)):
 
 ### 1. Gate elevation
 ```swift
@@ -120,7 +120,7 @@ true (decayed) value.
 them when debugging "hearts look wrong."
 
 The result of all three is bundled into one immutable `Outcome` struct
-([line 221](../../../apps/menubar/Sources/LivePollingDriver.swift)) carrying
+([line 221](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L221)) carrying
 state, visual mode, tooltip, attention, gate badge, and RPG numbers.
 
 ---
@@ -130,7 +130,7 @@ state, visual mode, tooltip, attention, gate badge, and RPG numbers.
 The renderer must not be poked 1×/second with the same value (wasteful, and on
 the menu bar it'd cause flicker). So `emit` keeps a cached "last emitted" value
 for **each** channel and only fires the sink on a real change
-([lines 373–447](../../../apps/menubar/Sources/LivePollingDriver.swift)):
+([lines 373–447](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L373)):
 
 ```swift
 let renderChanged = lastRendered == nil || prior.state != new.state || prior.mode != new.mode
@@ -166,7 +166,7 @@ exact subtlety with RxJS `BehaviorSubject` vs `Subject`.
 
 ★ **The `applyPlatform` channel already extracts `source_event.origin` and
 pushes it to the floating pet** to pick the platform logo chip
-([line 421](../../../apps/menubar/Sources/LivePollingDriver.swift)). In v1 it
+([line 421](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L421)). In v1 it
 just decorates the single pet. In v2, `origin` becomes the **routing key** that
 decides *which* pet gets the update. The plumbing to read the key already exists;
 v2 changes what you *do* with it.

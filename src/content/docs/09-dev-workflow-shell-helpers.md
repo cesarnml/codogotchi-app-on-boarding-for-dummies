@@ -18,7 +18,7 @@ title: "09 — Dev-Workflow Shell Helpers"
 Recall from [Ch.03](./03-the-polling-loop.md): the app polls `state.json` at 1 Hz,
 **but** it first checks a higher-priority *preview override* file. From
 `PreviewOverrideReader`
-([`LivePollingDriver.swift:470`](../../../apps/menubar/Sources/LivePollingDriver.swift)):
+([`LivePollingDriver.swift:470`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L470)):
 
 ```
 $TMPDIR/codogotchi-preview/state-override.json   ← if present + unexpired, WINS

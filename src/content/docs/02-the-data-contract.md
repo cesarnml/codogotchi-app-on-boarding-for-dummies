@@ -17,7 +17,7 @@ discipline, not by a compiler. Hold that thought — it's the big gotcha.
 
 ## The shape of `state.json`
 
-From [`state-json.ts`](../../../packages/contracts/src/state-json.ts), lightly
+From [`state-json.ts`](https://github.com/cesarnml/codogotchi/blob/main/packages/contracts/src/state-json.ts), lightly
 abridged:
 
 ```ts
@@ -53,7 +53,7 @@ into a collection keyed by `origin` (the platform). More in Chapter 06.
 
 ## The closed `ActivityState` enum
 
-[`ActivityState.swift:13`](../../../apps/menubar/Sources/ActivityState.swift):
+[`ActivityState.swift:13`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/ActivityState.swift#L13):
 
 ```swift
 enum ActivityState: String, Equatable, Codable, CaseIterable {
@@ -118,7 +118,7 @@ suspect a state-string mismatch between the TS producer and this enum.
 
 ## `StateSnapshot` — the decoded file
 
-[`ActivityState.swift:163`](../../../apps/menubar/Sources/ActivityState.swift)
+[`ActivityState.swift:163`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/ActivityState.swift#L163)
 is the Swift mirror of `state.json`:
 
 ```swift
@@ -160,7 +160,7 @@ This is the thing most likely to trip you, and it's load-bearing for v2.
 | TypeScript | `STATE_JSON_SCHEMA_VERSION = 6` | `packages/contracts/src/state-json.ts:4` |
 | Swift | `EXPECTED_STATE_SCHEMA_VERSION = 6` | `StateJsonReader.swift:8` |
 
-The forward-compat policy ([`StateJsonReader.swift`](../../../apps/menubar/Sources/StateJsonReader.swift)):
+The forward-compat policy ([`StateJsonReader.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/StateJsonReader.swift)):
 
 - file `schema_version` **>** what the app expects → **refuse** (return
   `.schemaNewer`, show "update the app" tooltip). The app won't guess at a shape
