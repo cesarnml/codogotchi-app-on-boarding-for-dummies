@@ -1,0 +1,202 @@
+/*
+ * Codogotchi "Cute Thai Cartoon" theme for Starlight.
+ * Palette mirrors web/src/styles/global.css — OKLCH values are canonical,
+ * hex comments are the sRGB originals for reference.
+ */
+
+/* ── Fonts ────────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Light mode ───────────────────────────────────────────────────────────── */
+:root[data-theme='light'] {
+  /* backgrounds */
+  --sl-color-bg:             oklch(98.24% 0.013  71.33); /* #fff8f0 cream */
+  --sl-color-bg-sidebar:     oklch(94.88% 0.0153 77.07); /* #f4ede3 */
+  --sl-color-bg-inline-code: oklch(91.47% 0.0149 80.71); /* #e8e2d8 */
+  --sl-color-bg-nav:         oklch(98.24% 0.013  71.33);
+  --sl-color-bg-badge:       oklch(71.93% 0.1506 44.79); /* primary-container */
+
+  /* text */
+  --sl-color-text:           oklch(22.37% 0.0105 80.58); /* #1e1b16 charcoal */
+  --sl-color-text-accent:    oklch(49.56% 0.1328 44.15); /* #9d4313 terracotta */
+  --sl-color-text-invert:    oklch(100% 0 89.88);
+
+  /* accent (terracotta) */
+  --sl-color-accent:         oklch(49.56% 0.1328 44.15); /* #9d4313 */
+  --sl-color-accent-high:    oklch(34.63% 0.1007 44.03); /* #622300 */
+  --sl-color-accent-low:     oklch(91.78% 0.0445 42.42); /* #ffdbcd */
+
+  /* grays — mapped to warm-tinted surface scale */
+  --sl-color-gray-1:         oklch(22.37% 0.0105 80.58); /* on-surface */
+  --sl-color-gray-2:         oklch(39.81% 0.0309 42.86); /* on-surface-variant */
+  --sl-color-gray-3:         oklch(57.13% 0.0321 42.51); /* outline */
+  --sl-color-gray-4:         oklch(83.08% 0.0344 43.47); /* outline-variant */
+  --sl-color-gray-5:         oklch(91.47% 0.0149 80.71); /* surface-variant */
+  --sl-color-gray-6:         oklch(94.88% 0.0153 77.07); /* surface-container */
+  --sl-color-gray-7:         oklch(98.24% 0.013  71.33); /* surface */
+
+  --sl-color-hairline-light:  oklch(83.08% 0.0344 43.47);
+  --sl-color-hairline-medium: oklch(57.13% 0.0321 42.51);
+  --sl-color-hairline-shade:  oklch(39.81% 0.0309 42.86);
+
+  --sl-color-white: oklch(100% 0 89.88);
+  --sl-color-black: oklch(22.37% 0.0105 80.58);
+}
+
+/* ── Dark mode ────────────────────────────────────────────────────────────── */
+:root[data-theme='dark'] {
+  --sl-color-bg:             oklch(21.78% 0 89.88);       /* #1a1a1a terminal-void */
+  --sl-color-bg-sidebar:     oklch(31.02% 0.0113 84.59);  /* #33302a */
+  --sl-color-bg-inline-code: oklch(36.65% 0.0236 42.93);  /* #4a3b35 charcoal-ink */
+  --sl-color-bg-nav:         oklch(21.78% 0 89.88);
+  --sl-color-bg-badge:       oklch(40.87% 0.1193 43.79);
+
+  --sl-color-text:           oklch(95.79% 0.0153 77.07);  /* #f7f0e6 */
+  --sl-color-text-accent:    oklch(83.55% 0.0965 43.63);  /* #ffb596 inverse-primary */
+  --sl-color-text-invert:    oklch(22.37% 0.0105 80.58);
+
+  --sl-color-accent:         oklch(71.93% 0.1506 44.79);  /* #f0824e */
+  --sl-color-accent-high:    oklch(83.55% 0.0965 43.63);  /* #ffb596 */
+  --sl-color-accent-low:     oklch(36.65% 0.0236 42.93);  /* #4a3b35 */
+
+  --sl-color-gray-1:         oklch(95.79% 0.0153 77.07);
+  --sl-color-gray-2:         oklch(83.08% 0.0344 43.47);
+  --sl-color-gray-3:         oklch(57.13% 0.0321 42.51);
+  --sl-color-gray-4:         oklch(39.81% 0.0309 42.86);
+  --sl-color-gray-5:         oklch(36.65% 0.0236 42.93);
+  --sl-color-gray-6:         oklch(31.02% 0.0113 84.59);
+  --sl-color-gray-7:         oklch(21.78% 0 89.88);
+
+  --sl-color-hairline-light:  oklch(39.81% 0.0309 42.86);
+  --sl-color-hairline-medium: oklch(57.13% 0.0321 42.51);
+  --sl-color-hairline-shade:  oklch(83.08% 0.0344 43.47);
+
+  --sl-color-white: oklch(95.79% 0.0153 77.07);
+  --sl-color-black: oklch(21.78% 0 89.88);
+}
+
+/* ── Typography ───────────────────────────────────────────────────────────── */
+:root {
+  --sl-font:      'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif;
+  --sl-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.sl-markdown-content h4,
+.site-title,
+.hero h1,
+[class*='Hero'] h1 {
+  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Starlight uses --sl-color-white for heading text in both modes;
+   force dark in light mode so they're readable on cream. */
+:root[data-theme='light'] h1,
+:root[data-theme='light'] h2,
+:root[data-theme='light'] h3,
+:root[data-theme='light'] h4 {
+  color: oklch(22.37% 0.0105 80.58); /* on-surface charcoal */
+  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Right-column "On this page" headings */
+:root[data-theme='light'] .right-sidebar-panel * {
+  color: oklch(22.37% 0.0105 80.58);
+}
+
+/* Breadcrumb / page header strip */
+:root[data-theme='light'] .sl-breadcrumbs,
+:root[data-theme='light'] [class*='breadcrumb'] {
+  color: oklch(39.81% 0.0309 42.86);
+}
+
+/* ── Paper dot-grid background (light only) ───────────────────────────────── */
+:root[data-theme='light'] body {
+  background-image: radial-gradient(
+    oklch(83.08% 0.0344 43.47) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+/* ── Sidebar nav — warm tint on active item ───────────────────────────────── */
+.sidebar-content a[aria-current='page'],
+nav a[aria-current='page'] {
+  background-color: oklch(91.78% 0.0445 42.42); /* primary-fixed */
+  color: oklch(34.63% 0.1007 44.03) !important; /* on-primary-container */
+  border-left: 3px solid oklch(49.56% 0.1328 44.15); /* terracotta */
+  font-weight: 600;
+}
+
+:root[data-theme='dark'] .sidebar-content a[aria-current='page'],
+:root[data-theme='dark'] nav a[aria-current='page'] {
+  background-color: oklch(36.65% 0.0236 42.93); /* charcoal-ink */
+  color: oklch(83.55% 0.0965 43.63) !important; /* inverse-primary */
+  border-left: 3px solid oklch(71.93% 0.1506 44.79);
+}
+
+/* ── Inline code ─────────────────────────────────────────────────────────── */
+:root[data-theme='light'] .sl-markdown-content :not(pre) > code {
+  background-color: oklch(91.78% 0.0445 42.42); /* primary-fixed */
+  color: oklch(34.63% 0.1007 44.03);            /* on-primary-container */
+  border: 1px solid oklch(83.08% 0.0344 43.47);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+/* ── Sticker-style callout/aside cards ───────────────────────────────────── */
+:root[data-theme='light'] .starlight-aside {
+  border: 2px solid oklch(36.65% 0.0236 42.93); /* charcoal-ink */
+  box-shadow: 3px 3px 0 0 oklch(36.65% 0.0236 42.93);
+  border-radius: 6px;
+}
+
+/* ── Site header / nav bar ───────────────────────────────────────────────── */
+header.header {
+  border-bottom: 2px solid oklch(83.08% 0.0344 43.47);
+}
+
+:root[data-theme='dark'] header.header {
+  border-bottom: 2px solid oklch(39.81% 0.0309 42.86);
+}
+
+/* ── Pagefind search ─────────────────────────────────────────────────────── */
+:root[data-theme='light'] {
+  --pagefind-ui-primary:    oklch(49.56% 0.1328 44.15);
+  --pagefind-ui-text:       oklch(22.37% 0.0105 80.58);
+  --pagefind-ui-background: oklch(98.24% 0.013  71.33);
+  --pagefind-ui-border:     oklch(83.08% 0.0344 43.47);
+  --pagefind-ui-tag:        oklch(91.78% 0.0445 42.42);
+}
+
+/* ── Mermaid diagrams ────────────────────────────────────────────────────── */
+div.mermaid {
+  background: oklch(94.88% 0.0153 77.07);
+  border: 2px solid oklch(83.08% 0.0344 43.47);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+:root[data-theme='dark'] div.mermaid {
+  background: oklch(31.02% 0.0113 84.59);
+  border-color: oklch(39.81% 0.0309 42.86);
+}
+
+/* ── TS-analogy / Gotcha / Prove-it callout emoji markers ────────────────── */
+.sl-markdown-content blockquote {
+  border-left: 4px solid oklch(71.93% 0.1506 44.79); /* primary-container */
+  background: oklch(91.78% 0.0445 42.42 / 0.4);
+  border-radius: 0 6px 6px 0;
+  padding: 0.75rem 1rem;
+}
+
+:root[data-theme='dark'] .sl-markdown-content blockquote {
+  border-left-color: oklch(71.93% 0.1506 44.79);
+  background: oklch(36.65% 0.0236 42.93 / 0.5);
+}
