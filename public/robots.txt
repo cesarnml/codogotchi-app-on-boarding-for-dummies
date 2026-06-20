@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://codogotchipfordummies.vercel.app/sitemap-index.xml

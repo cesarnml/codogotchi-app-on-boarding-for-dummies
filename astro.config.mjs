@@ -18,6 +18,7 @@ function remarkMermaid() {
 }
 
 export default defineConfig({
+  site: 'https://codogotchipfordummies.vercel.app',
   markdown: {
     remarkPlugins: [remarkMermaid],
   },
@@ -25,10 +26,22 @@ export default defineConfig({
     starlight({
       customCss: ['./src/styles/custom.css'],
       title: 'Codogotchi for Dummies',
-      description: "A TS/FP developer's field guide to the Codogotchi macOS menubar app.",
+      description: "A field guide to Codogotchi for TypeScript & FP developers — learn the Swift/AppKit architecture, data flow, and contribute to v2. Works with Claude Code, Codex, Cursor, Copilot, and Antigravity.",
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/cesarnml/codogotchi-app-on-boarding-for-dummies' }],
       head: [
         { tag: 'link', attrs: { rel: 'icon', type: 'image/webp', href: '/favicon.webp' } },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'keywords',
+            content: 'Codogotchi, Codogotchi architecture, Codex pets, OpenPets alternative, AI coding pet, macOS menubar pet, Claude Code, Codex, Cursor, Copilot, Antigravity, Swift AppKit, contribute Codogotchi, developer Tamagotchi, AI coding companion, open source',
+          },
+        },
+        { tag: 'meta', attrs: { property: 'og:image', content: 'https://codogotchi.app/og-image.png' } },
+        { tag: 'meta', attrs: { property: 'og:image:width', content: '1200' } },
+        { tag: 'meta', attrs: { property: 'og:image:height', content: '630' } },
+        { tag: 'meta', attrs: { name: 'twitter:card', content: 'summary_large_image' } },
+        { tag: 'meta', attrs: { name: 'twitter:image', content: 'https://codogotchi.app/og-image.png' } },
         {
           tag: 'script',
           attrs: { type: 'module' },
