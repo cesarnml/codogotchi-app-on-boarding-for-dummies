@@ -117,13 +117,38 @@ h1, h2, h3, h4 {
 }
 
 /* ── Mobile TOC toggle ("On this page") ──────────────────────────────────── */
-/* Starlight uses --sl-color-black for both bg and text here; override both. */
+/* Closed toggle button */
 :root[data-theme='light'] span.toggle,
 :root[data-theme='light'] [class*='toggle'][class*='sl-flex'] {
   background-color: var(--cg-ink) !important;
   color: var(--cg-cream) !important;
   border: 1.5px solid var(--cg-ink) !important;
   border-radius: 8px !important;
+}
+
+/* Open dropdown — Starlight uses --sl-color-black as bg; override to cream */
+:root[data-theme='light'] mobile-toc,
+:root[data-theme='light'] mobile-toc details,
+:root[data-theme='light'] mobile-toc details[open],
+:root[data-theme='light'] mobile-toc details > :not(summary),
+:root[data-theme='light'] mobile-toc ul,
+:root[data-theme='light'] mobile-toc li,
+:root[data-theme='light'] starlight-toc details > :not(summary),
+:root[data-theme='light'] starlight-toc ul {
+  background-color: var(--cg-cream) !important;
+  color: var(--cg-text) !important;
+}
+
+/* TOC links inside the open dropdown */
+:root[data-theme='light'] mobile-toc a,
+:root[data-theme='light'] mobile-toc li a,
+:root[data-theme='light'] starlight-toc a {
+  color: var(--cg-text) !important;
+}
+:root[data-theme='light'] mobile-toc a[aria-current='true'],
+:root[data-theme='light'] starlight-toc a[aria-current='true'] {
+  color: var(--cg-terracotta) !important;
+  font-weight: 700;
 }
 
 /* ── Search bar ───────────────────────────────────────────────────────────── */
