@@ -134,6 +134,16 @@ h1, h2, h3, h4 {
   background-color: var(--cg-cream-dim);
 }
 
+/* Group labels (Home, Core pipeline, Hands-on, Reference) */
+:root[data-theme='light'] .group-label,
+:root[data-theme='light'] [class*='group-label'],
+:root[data-theme='light'] .sidebar-content summary,
+:root[data-theme='light'] .sidebar-content > ul > li > details > summary,
+:root[data-theme='light'] nav.sidebar a[href='/'] {
+  color: oklch(34.63% 0.1007 44.03) !important; /* #622300 on-primary-container */
+  font-weight: 700 !important;
+}
+
 /* Active item — sticker highlight */
 .sidebar-content a[aria-current='page'],
 nav a[aria-current='page'] {
