@@ -4,8 +4,11 @@ title: "10 — The Seams: Why v3 Wants a Redesign"
 
 > Goal: read the v2 code *critically*. Each section names a seam — a place
 > where the architecture creaks — with the symptom you can verify yourself,
-> why it happened, and the shape v3 wants instead. This is the technical case
-> behind the v3 "architectural consolidation" track.
+> why it happened, and the shape v3 wants instead. Every seam ends with a
+> 🗣️ **plain-English** translation — if the jargon version loses you, read
+> those first, top to bottom: they're the whole argument in ordinary words.
+> This is the technical case behind the v3 "architectural consolidation"
+> track.
 
 A framing note before the critique: v2 was built incrementally under a
 deadline, feature by feature, and **it works** — well-tested (900+ tests),
@@ -53,6 +56,13 @@ keys enter the pool), with the string form demoted to a serialization detail
 (`app-state.json` persistence, slice filenames). Land this *before* the
 Sessions panel, which would otherwise become yet another colon-split site.
 
+🗣️ **In plain English.** Every pet window is identified by a text label with
+secret rules baked into the spelling — a colon means one thing, the exact word
+"combined" means another. Nothing stops you from mis-reading a label, and every
+new feature has to re-learn the spelling rules from scratch. v3 gives the three
+kinds of window three real names the compiler knows, so mis-handling one
+becomes a build error instead of a runtime bug.
+
 ---
 
 ## Seam 2 — The factory god-closures
@@ -79,6 +89,12 @@ factories as dumb `panel.onX = { router.handle(.x, for: key) }` lines. The
 targeting rules get one home, one test suite, and the two factories stop being
 parallel implementations.
 
+🗣️ **In plain English.** All the "when the user clicks X, do Y" rules live
+inside two giant tangles of setup code, and the two tangles are near-copies of
+each other. Understanding any one button means reading a hundred lines of
+unrelated wiring. v3 moves the rules into one small, testable rulebook and
+leaves the setup code as boring one-liners.
+
 ---
 
 ## Seam 3 — Three-surface parity is maintained by hand
@@ -101,6 +117,12 @@ Minimalist retitles Hide; both must remember the mode-switch pill).
 `[PromptItem]` builder parameterized by window shape — with the views reduced
 to "present at this anchor with these capabilities." Parity stops being a
 code-review discipline and becomes a type.
+
+🗣️ **In plain English.** The right-click menu is hand-built three separate
+times — once per kind of window — so every fix and every new menu item must be
+done three times, and forgetting one copy is silent. We know it's not
+hypothetical: a recent bug literally shipped in one copy after being fixed in
+another. v3 builds the menu once and hands it to all three windows.
 
 ---
 
@@ -127,6 +149,13 @@ apply  : effects only — factories, teardown, per-tick pushes
 controllers; the effectful tail shrinks to a mechanical differ. Most of the
 current tests survive as-is against the composed whole.
 
+🗣️ **In plain English.** The routine that decides which pets should be on
+screen also *does* the showing and hiding, all in one long recipe — so you
+can't check its decisions without actually opening windows, and changing one
+step risks every step after it. v3 splits it into "decide" (a pure calculation
+you can test with plain numbers) and "do" (a dumb executor). Same behavior,
+far easier to change safely.
+
 ---
 
 ## Seam 5 — Config writers are multiplying
@@ -141,6 +170,12 @@ or CLI integrations make it four.
 **v3 shape.** A single `CustomizationStore` (read-merge-write + change
 publication in one type; the VM becomes a view-facing adapter). Notification
 duct tape becomes the store's actual API.
+
+🗣️ **In plain English.** Several parts of the app edit the same settings file
+independently and then shout "I changed it!" so the others can catch up. With
+two editors that's manageable; v3 is about to add more. Better: one gatekeeper
+owns the file, everyone asks it to make changes, and it tells subscribers
+what changed — no shouting, no stale copies.
 
 ---
 
@@ -166,6 +201,12 @@ forcing function to split the multi-type files. Do it *first* in the
 consolidation phase, before other refactors multiply the diff noise of
 moving files later.
 
+🗣️ **In plain English.** All 63 source files sit in one folder, like a filing
+cabinet with a single drawer — you find things only if you already know their
+names, and some "files" are really five documents stapled together. v3 sorts
+them into half a dozen labeled drawers matching how the app actually works.
+Cheap to do, and the biggest single win for anyone new to the codebase.
+
 ---
 
 ## Case study: how the seams compound
@@ -184,6 +225,13 @@ states can a session be in"** — the Active/Live/Archived/Pruned diagram in
 Chapter 9 exists only in this guide and in code comments. When lifecycle is
 implicit, every feature that touches it (Show, Hide, prune, session caps, the
 upcoming Sessions panel) re-discovers it by debugging.
+
+🗣️ **In plain English.** A pet quietly lives through four ages — on screen,
+recently active, dormant, gone — but the code never says so anywhere; the ages
+only emerge from three unrelated timers interacting. So a simple-sounding
+button ("Show my pet") turned into a four-part bug hunt. v3 writes the ages
+down as a first-class concept and then shows them to the user as the Sessions
+panel — the same fix serving both the code and the product.
 
 ---
 
