@@ -333,6 +333,15 @@ div.mermaid {
   --pagefind-ui-tag:        var(--cg-terracotta-bg);
 }
 
+/* ── Theme select hover ───────────────────────────────────────────────── */
+/* Starlight's select label hover sets `color: var(--sl-color-white)`, which
+   this light theme maps to cream — cream-on-cream, i.e. the label vanishes on
+   hover. Match the GitHub icon's terracotta instead. The :where() scoping on
+   Starlight's own rule has zero specificity, so no !important is needed. */
+:root[data-theme='light'] starlight-theme-select label:hover {
+  color: var(--cg-terracotta);
+}
+
 /* ── Mobile theme toggle ─────────────────────────────────────────────────── */
 .mobile-theme-toggle {
   display: flex;
