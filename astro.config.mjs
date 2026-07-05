@@ -69,6 +69,13 @@ export default defineConfig({
           ],
         },
         {
+          label: 'The v2 architecture (v3 prep)',
+          items: [
+            { label: '12 — v2 As Built: Slices, Keys & the Window Pool', slug: '12-v2-as-built' },
+            { label: '13 — The Seams: Why v3 Wants a Redesign', slug: '13-the-seams-v3-redesign' },
+          ],
+        },
+        {
           label: 'Hands-on',
           items: [
             { label: '07 — Challenges', slug: '07-challenges' },

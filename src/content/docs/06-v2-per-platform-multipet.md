@@ -6,6 +6,13 @@ title: "06 — Where v2 is Going"
 > the exact code each part touches. After this you should be able to scope the
 > work yourself.
 
+> 📜 **Historical note.** This chapter was written *before* v2 shipped and is
+> kept as the design-time snapshot (the plan, and the reasoning behind it).
+> v2 has since landed — for the architecture as actually built (state.d
+> slices, the window pool, session lifecycle) continue to
+> [Chapter 12](/12-v2-as-built/), and for the critical read that motivates the
+> v3 consolidation work, [Chapter 13](/13-the-seams-v3-redesign/).
+
 Source design docs (read alongside this):
 - `notes/private/codogotchi-v2-per-platform-floating-pets.md` — the design.
 - `notes/private/phase-12-cleanup-and-v2-roadmap-synthesis.md` — sequencing;
