@@ -4,7 +4,9 @@ title: "09 — v2 As Built: Slices, Keys & the Window Pool"
 
 > Goal: hold the *shipped* v2 architecture in your head — every layer between a
 > hook firing and N pets on screen — so that Chapter 10's critique (and the v3
-> redesign it motivates) reads as obvious rather than opinionated.
+> redesign it motivates) reads as obvious rather than opinionated. Each
+> section ends with a 🗣️ **plain-English** recap — read those alone for the
+> no-jargon version of how v2 works.
 
 Chapter 06 was written *before* v2 landed and describes the plan. This chapter
 describes what actually shipped. Read 01–04 first; this builds directly on the
@@ -36,6 +38,11 @@ is authoritative: `origin:session_id.json`, parsed by
 🇹🇸 **TS analogy.** v1 was a single mutable variable that concurrent writers
 clobbered (last-writer-wins). v2 is a `Map<`origin:session`, Slice>` implemented
 as a directory — each producer owns its own key, so writers never contend.
+
+🗣️ **In plain English.** In v1, every AI tool scribbled its status onto the
+same single sticky note, so they kept overwriting each other. In v2, each tool
+*session* gets its own sticky note in a shared folder, named after who wrote
+it. Nobody overwrites anybody; the app just reads the whole folder.
 
 Two readers consume the directory, both applying a **2-hour mtime staleness
 filter** (a slice untouched for 2h is invisible, as if deleted):
@@ -73,6 +80,11 @@ The discriminators are string operations: colon-split for session identity,
 `== "combined"` for the shared window. There is no enum. Remember that for
 Chapter 10.
 
+🗣️ **In plain English.** The same pet can be addressed three ways: "this exact
+work session," "this tool as a whole," or "everyone sharing the one group
+window." The app tells these apart by inspecting the spelling of a text label
+— which works, but means every part of the app has to know the spelling rules.
+
 ---
 
 ## `customization.json` — the user-facing control plane
@@ -97,6 +109,12 @@ Writes go through `CustomizationTabViewModel` (read-merge-write via
 post `.customizationDidChangeExternally` so an open Customization tab reloads
 instead of going stale. The pool needs no notification — it re-reads the file
 next tick anyway.
+
+🗣️ **In plain English.** One settings file is the single source of truth for
+"how do you want your pets displayed?" — window style per tool, how many
+session pets may show, how long an idle pet lingers. The app re-reads it every
+second, so a change made anywhere takes effect almost immediately without
+anything needing to tell anything else.
 
 ---
 
@@ -144,6 +162,13 @@ session as "Session 1"; other sessions must show activity *after* the toggle
 to earn a panel. This prevents a wall of zombie panels the instant you enable
 the feature on a `state.d/` with weeks of history.
 
+🗣️ **In plain English.** Once a second, one routine decides the fate of every
+pet: who appears, who's overstayed their welcome, who gets folded into the
+group window, and who's waitlisted because you capped how many may show. Two
+house rules explain most surprises: a *busy* pet never ages (only continuous
+idleness counts against the timer), and *hiding* a pet is not the same as it
+expiring — hidden pets keep their seat and come back when asked.
+
 ---
 
 ## Three window shapes, one protocol
@@ -168,6 +193,12 @@ Panel Size / Hide), coordinated across windows by
 desired children against `windows` (the previous vnode tree), with the
 factories as `createElement`. Except — and this matters for Chapter 10 — the
 "diff" is hand-written imperative steps, not a derived pure value.
+
+🗣️ **In plain English.** A pet on your screen isn't one window — it's a small
+flock of them: the sprite, its name tag, its speech bubble, its status badge,
+all separate panels flying in formation, re-aligned many times a second. There
+are three body plans (full sprite, compact strip, shared group window), and
+each currently sews its own flock together by hand.
 
 ---
 
@@ -199,6 +230,12 @@ stateDiagram-v2
 The v3 **Sessions panel** is essentially this diagram as UI (Active / Live /
 Archived tabs) — see the v3 roadmap note in the main repo:
 `notes/private/codogotchi-v3-polish-roadmap.md`.
+
+🗣️ **In plain English.** A pet passes through four ages: on screen → recently
+active but tucked away → dormant (invisible, still recoverable) → gone for
+good. Three different timers drive those transitions, they don't know about
+each other, and today the user can't see any of it — which is exactly why v3
+adds a Sessions panel that lays the ages out in the open.
 
 ---
 
