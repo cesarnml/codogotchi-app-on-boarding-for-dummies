@@ -144,6 +144,30 @@ duct tape becomes the store's actual API.
 
 ---
 
+## Seam 6 — The flat `Sources/` directory
+
+**Symptom.** `ls apps/menubar/Sources` — 63 Swift files at one level: readers,
+writers, view models, panel controllers, SpriteKit scenes, pollers, pruners,
+and the app entry point, discoverable only by naming convention. And some
+files bundle several unrelated types: `FloatingPetPanel.swift` alone contains
+both panel controllers, both badge views, the entire right-click prompt
+system, and the Panel Size pill — 4,000+ lines.
+
+**Why it happened.** xcodegen's `project.yml` globs the directory, so a new
+file lands wherever `touch` puts it, and nothing ever forced a second level.
+
+**v3 shape.** Group by the layers this guide already teaches: `State/` (the
+disk contract — readers, writers, pruners), `Pool/` (window pool, render
+keys, session policy), `Windows/` (panel controllers, chrome, prompts),
+`Scene/` (SpriteKit + effects), `Settings/` (tabs + view models), `App/`
+(entry point, menu, polling driver). Mechanically cheap — globs still match,
+imports are module-internal, so it's file moves only — and it's a natural
+forcing function to split the multi-type files. Do it *first* in the
+consolidation phase, before other refactors multiply the diff noise of
+moving files later.
+
+---
+
 ## Case study: how the seams compound
 
 The best illustration is a real v3-preview bug chain. "Show Pet" on a hidden,
