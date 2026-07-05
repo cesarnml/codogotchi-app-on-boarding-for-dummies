@@ -6,7 +6,7 @@ title: "03 — The Polling Loop"
 > understand the three "smart" transforms it applies (gate elevation, revive
 > window, heart decay) plus the change-gating that keeps it cheap.
 
-File: [`LivePollingDriver.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift)
+File: [`LivePollingDriver.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/LivePollingDriver.swift)
 (538 lines). This is the brain of the consumer side.
 
 ---
@@ -40,11 +40,17 @@ Two-stage design, very FP-friendly:
 `emit` is a memoized dispatch layer — like `useEffect` deps or a `distinctUntilChanged`
 in RxJS — that fires the side effect only when the value actually changed.
 
+🗣️ **In plain English.** Once a second the app does two things, strictly in
+order: *make up its mind* about what should be on screen (pure thinking, no
+drawing), then *touch the screen* — but only for the parts that actually
+changed since last time. Keeping "deciding" and "doing" separate is why the
+loop is easy to test and cheap to run.
+
 ---
 
 ## One tick, line by line
 
-`runTick()` ([line 202](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L202)):
+`runTick()` ([line 202](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/LivePollingDriver.swift#L202)):
 
 ```swift
 private func runTick() {
@@ -61,7 +67,7 @@ private func runTick() {
 }
 ```
 
-🧠 **Plain English.** "Read the file. If the agent's state changed since last
+🗣️ **In plain English.** "Read the file. If the agent's state changed since last
 time, jot it in the log. Decide what should be on screen. Push only the bits
 that changed to the screen." That's the entire heartbeat.
 
@@ -70,7 +76,7 @@ that changed to the screen." That's the entire heartbeat.
 ## `decide()` — the three smart transforms
 
 On a successful read, `decide` doesn't just pass the snapshot through. It applies
-three layered transforms ([lines 256–295](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L256)):
+three layered transforms ([lines 256–295](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/LivePollingDriver.swift#L256)):
 
 ### 1. Gate elevation
 ```swift
@@ -81,7 +87,7 @@ If `gate.json` says SoA is in a known phase (e.g. red-TDD, open-PR), that
 tool calls ("looks like editing"); the gate *knows* ("we are in the review
 phase"). Gate wins.
 
-🧠 **Plain English.** Two sources of truth about what the agent is doing; the
+🗣️ **In plain English.** Two sources of truth about what the agent is doing; the
 trustworthy one (SoA's own signal) beats the inferred one.
 
 ### 2. Revive window
@@ -92,7 +98,7 @@ If the pet just *gained* a half-heart, `revive_until` is set to ~5s in the
 future. While that window is open, play the celebration animation, overriding
 everything else. After 5s it lapses and falls back to `resolved`.
 
-🧠 **Plain English.** "You just healed — do a little happy dance for 5 seconds,
+🗣️ **In plain English.** "You just healed — do a little happy dance for 5 seconds,
 then go back to whatever you were doing."
 
 ### 3. Heart decay (display-only)
@@ -108,7 +114,7 @@ no new write, the pet should *look* sicker now. The decay engine computes the
 > The writer is authoritative on *heals*; Swift only ever **decays**, never
 > invents heals.
 
-🧠 **Plain English.** Health only goes *down* on the Swift side, based on real
+🗣️ **In plain English.** Health only goes *down* on the Swift side, based on real
 elapsed time, so a pet left alone visibly wilts even though no new file was
 written. Healing must come from the producer. And because the 1 Hz poll
 recomputes decay every tick against `now`, **the poll loop itself is the decay
@@ -120,7 +126,7 @@ true (decayed) value.
 them when debugging "hearts look wrong."
 
 The result of all three is bundled into one immutable `Outcome` struct
-([line 221](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L221)) carrying
+([line 221](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/LivePollingDriver.swift#L221)) carrying
 state, visual mode, tooltip, attention, gate badge, and RPG numbers.
 
 ---
@@ -130,7 +136,7 @@ state, visual mode, tooltip, attention, gate badge, and RPG numbers.
 The renderer must not be poked 1×/second with the same value (wasteful, and on
 the menu bar it'd cause flicker). So `emit` keeps a cached "last emitted" value
 for **each** channel and only fires the sink on a real change
-([lines 373–447](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L373)):
+([lines 373–447](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/LivePollingDriver.swift#L373)):
 
 ```swift
 let renderChanged = lastRendered == nil || prior.state != new.state || prior.mode != new.mode
@@ -151,6 +157,12 @@ identical nils are suppressed.
 first value yet and one whose first value happens to be `null` — you've hit this
 exact subtlety with RxJS `BehaviorSubject` vs `Subject`.
 
+🗣️ **In plain English.** The app remembers what it last told each part of the
+screen, and stays silent when nothing changed — otherwise the menu-bar icon
+would flicker once a second for no reason. One subtlety: the very *first*
+message always goes through, even if it's "nothing to show," so leftover
+placeholders get cleared.
+
 ### The sinks — where v2 plugs in
 
 `emit` calls these closures (set in `MenubarApp`):
@@ -166,7 +178,7 @@ exact subtlety with RxJS `BehaviorSubject` vs `Subject`.
 
 ★ **The `applyPlatform` channel already extracts `source_event.origin` and
 pushes it to the floating pet** to pick the platform logo chip
-([line 421](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L421)). In v1 it
+([line 421](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/LivePollingDriver.swift#L421)). In v1 it
 just decorates the single pet. In v2, `origin` becomes the **routing key** that
 decides *which* pet gets the update. The plumbing to read the key already exists;
 v2 changes what you *do* with it.
@@ -188,6 +200,11 @@ v2 changes what you *do* with it.
 `tickForTesting()` is exposing the interval's callback so tests call it directly
 instead of using fake timers — same goal as `jest.advanceTimersByTime`, done by
 hand for determinism.
+
+🗣️ **In plain English.** The heartbeat is an ordinary once-a-second timer. It
+naturally stops while your Mac sleeps, and the one special case is waking up:
+the app immediately takes a fresh look instead of showing a stale pet for a
+second.
 
 ---
 

@@ -40,6 +40,11 @@ type StateReadError =
   | { tag: "schemaNewer"; got: number; expected: number }
 ```
 
+🗣️ **In plain English.** Swift lets you define "this value is exactly one of
+these N things, sometimes carrying extra data" — and then the compiler refuses
+to build until every one of the N is handled. It's the language feature this
+whole app leans on hardest.
+
 **Exhaustive `switch` with no `default`** is the payoff: the compiler forces you
 to handle every case (your `never`-check, automatic). You'll see this everywhere
 — e.g. the loop's `decide` switches over `Result` cases exhaustively. When you
@@ -71,6 +76,11 @@ let safe = origin ?? "manual"                         // default, like TS ??
 🇹🇸 You already know `?.` and `??` — same meaning. The new one is `guard let …
 else { return }`: an **early-return unwrap**. Read it as "I need this to exist;
 if it doesn't, leave now." It keeps the happy path un-nested below.
+
+🗣️ **In plain English.** "Maybe there's a value, maybe there isn't" is a
+first-class concept, and the compiler forces you to say what happens in the
+"isn't" case before you may touch the value. Whole classes of
+undefined-is-not-a-function bugs simply can't compile.
 
 ⚠️ **Double optional `String??`** appears in `StateJsonReader` (`lastActivityAt:
 String??`). That distinguishes *"key absent"* (outer `.none`) from *"key present
@@ -106,6 +116,12 @@ regular TS class you don't intend anyone to `extends`.
 mutating a *copy* — the caller's value is unchanged. Coming from JS objects
 (always by reference) this is the opposite default. Most structs here are `let`
 anyway, so it rarely surprises, but know it.
+
+🗣️ **In plain English.** Swift has two kinds of "thing": *copies* (hand someone
+a photocopy — they can scribble on theirs, yours is untouched) and *shared
+originals* (everyone holds the same document). Data in this app travels as
+photocopies; long-lived machinery is a shared original. The bite for JS folks:
+JS hands out shared originals by default, Swift hands out photocopies.
 
 ---
 
@@ -152,7 +168,7 @@ typealias Reader = (String) -> Result<StateSnapshot, StateReadError>
 init(reader: @escaping Reader = StateJsonReader.read(at:), …) { … }
 ```
 
-🧠 **Plain English.** `LivePollingDriver` doesn't hardcode "read from disk" — it
+🗣️ **In plain English.** `LivePollingDriver` doesn't hardcode "read from disk" — it
 takes a *function* that returns a `Result`. Production passes the real reader;
 tests pass `{ _ in .success(fakeSnapshot) }`. Pure functional DI — exactly your
 instinct.
@@ -177,7 +193,7 @@ panel.setFrameChangeHandler { [weak self] frame in
 }
 ```
 
-🧠 **Plain English.** "Inside this stored callback, don't keep `self` alive; if
+🗣️ **In plain English.** "Inside this stored callback, don't keep `self` alive; if
 `self` is already gone, do nothing (`self?.`)." Without `[weak self]`, the panel
 holds the closure, the closure holds the controller, the controller holds the
 panel → cycle → leak.
@@ -193,6 +209,12 @@ Related: the many `var someController: X?` properties held on `MenubarApp`
 the app explicitly *keeps* long-lived objects alive by storing them. 🇹🇸 In JS
 you'd just have a module-level variable; here holding the reference is what keeps
 it from being collected.
+
+🗣️ **In plain English.** Swift cleans up memory by counting who's still holding
+each object. Two objects gripping each other never get released — so callbacks
+say "hold this loosely" (`weak`), and important long-lived objects must be
+gripped *somewhere* or they silently evaporate. Most of the odd bracketed
+boilerplate you'll see is exactly this: grip management, not logic.
 
 ---
 
@@ -214,6 +236,10 @@ this work on the UI thread."
 
 Mostly you just leave these annotations alone. Know that they're why you don't
 see manual `DispatchQueue.main.async` everywhere.
+
+🗣️ **In plain English.** Screen-drawing on a Mac must happen on one special
+thread. The `@MainActor` label makes breaking that rule a *compile error*
+instead of a mysterious crash — the compiler is the bouncer.
 
 ---
 

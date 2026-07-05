@@ -42,6 +42,11 @@ contract. Recall from Chapter 02:
 > `source_event.origin`. The producer overwrites the whole file each event, so
 > concurrent agents last-writer-wins clobber each other.
 
+🗣️ **In plain English.** v1's diary had room for exactly one entry, so two AI
+tools running at once kept scribbling over each other's note. The entire v2
+insight is: don't build "multiple pets" — give the diary one page per tool, and
+multiple pets fall out naturally.
+
 The hard 80% of v2 is turning that scalar into a **collection keyed by
 platform**:
 
@@ -146,6 +151,12 @@ The honest hard parts: (1) the schema migration done in lockstep across three
 files; (2) concurrent slice writes in the producer; (3) per-platform window
 layout/persistence so pets don't overlap. None of these is architectural risk —
 they're known, scoped work.
+
+🗣️ **In plain English.** The plan looked safe because nothing had to be
+invented: the "who wrote this" label already flowed through every layer, and a
+split-the-signal component already existed. The work was rerouting existing
+plumbing, not laying new pipe. (Chapter 09 shows what actually shipped — the
+diary became a folder of per-session notes, going further than this plan.)
 
 ---
 

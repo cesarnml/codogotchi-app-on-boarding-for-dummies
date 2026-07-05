@@ -8,9 +8,14 @@ title: "15 — Procedural Effects Deep-Dive"
 > this chapter teaches the *toolkit generatively*: not just "here's what the two
 > effects do," but "here's the kit, here's how to invent new life with it."
 >
+> 🗣️ **In plain English.** The pet's flashiest moments — level-up fireworks,
+> sparkles, glows — use no drawn artwork at all. The app *generates* those
+> visuals with math at runtime, which is how she stays lively without anyone
+> painting new frames. This chapter shows how.
+
 > Prereq: [Ch.14](./14-macos-primitives-primer.md)'s SpriteKit section
 > (`SKView`/`SKScene`/`SKSpriteNode`/`SKTexture`/`SKAction`). All effect code lives
-> in [`FloatingPetScene.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift),
+> in [`FloatingPetScene.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift),
 > lines ~646–1005.
 
 ---
@@ -46,7 +51,7 @@ Everything below is assembled from these. Learn the five and you can read — an
 write — any effect.
 
 ### 1. The texture factory — drawing art in code
-[`FloatingPetScene.swift:964`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift#L964):
+[`FloatingPetScene.swift:964`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift#L964):
 
 ```swift
 private static func makeRadialGlowTexture(color: NSColor, diameter: Int = 128) -> SKTexture {
@@ -63,9 +68,9 @@ private static func makeRadialGlowTexture(color: NSColor, diameter: Int = 128) -
 }
 ```
 
-🧠 **Plain English.** Make a 128×128 bitmap, paint a radial gradient from
+🗣️ **In plain English.** Make a 128×128 bitmap, paint a radial gradient from
 *opaque-center* to *transparent-edge*, hand it to SpriteKit as a texture. That's a
-soft glowing dot. `renderImage` ([:985](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift#L985))
+soft glowing dot. `renderImage` ([:985](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift#L985))
 is the generic "give me a `CGContext`, I'll hand back a `CGImage`" helper —
 **this is your door to drawing *any* shape in code** (rings, stars, Zzz, hearts):
 swap the `drawRadialGradient` body for other Core Graphics calls (`addArc`,
@@ -103,7 +108,7 @@ spray/cloud/burst."
 🧠 This is the core economy: you don't make a green texture and a gold texture —
 you make **one** glow and recolor it at use-site. New color = new feeling, zero
 new assets. The palette constants live at
-[:657–676](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift#L657)
+[:657–676](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift#L657)
 (`levelUpGold`, `sicknessWarningGlow`, `sicknessCriticalGlow`, `sicknessFlyTint`).
 
 ### 4. SKAction — the animation verbs
@@ -127,7 +132,7 @@ here (this is most of what you'll ever need):
 animation DSL — keyframes as data.
 
 ### 5. The layer + lifecycle convention
-The scene has two child nodes ([:95](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift#L95)):
+The scene has two child nodes ([:95](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift#L95)):
 `petLayer` (the sprite) and **`overlayLayer`** (all effects), both centered on the
 panel. Effects are children of `overlayLayer`, each given a **name** so it can be
 found and removed:
@@ -165,17 +170,17 @@ real configs decoded. (All on `SKEmitterNode`.)
 | `particleColor` + `particleColorBlendFactor` | tint |
 | `particleBlendMode` | usually `.add` for light |
 
-**Decoded — sickness miasma** ([:739](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift#L739)):
+**Decoded — sickness miasma** ([:739](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift#L739)):
 slow upward fog. Low birth rate, emission straight up (`π/2`) with a wide spread,
 gentle `yAcceleration`, low alpha that fades, green tint, `.add`. → reads as a
 sickly rising haze. Critical doubles birth rate/speed/alpha.
 
-**Decoded — level-up fountain** ([:870](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift#L870)):
+**Decoded — level-up fountain** ([:870](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift#L870)):
 a quick upward gush. High birth rate (220) for 0.55 s then `birthRate = 0`,
 straight up, *negative* `yAcceleration` so sparks slow as they rise, fast alpha
 fade, gold. → a celebratory spark fountain at her feet.
 
-**Decoded — firework burst** ([:935](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift#L935)):
+**Decoded — firework burst** ([:935](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift#L935)):
 a radial pop. `numParticlesToEmit = 34`, full-circle emission
 (`emissionAngleRange = 2π`), speed tuned to `radius` so the reach stays inside the
 panel, birthRate gated on after a `delay` via `.run`. → a round firework that
@@ -191,8 +196,8 @@ table *is* your effect-design palette.
 ### Sickness (persistent, health-driven)
 Trigger: `applyRPGState` computes `SicknessLevel(halfHearts:)` and calls
 `setSicknessLevel` → `refreshSicknessEffect()`
-([`FloatingPetPanel.swift:237`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetPanel.swift#L237)).
-Composition ([:678](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift#L678)):
+([`FloatingPetPanel.swift:237`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetPanel.swift#L237)).
+Composition ([:678](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift#L678)):
 1. **Aura** — one recolored glow sprite behind her, `.add`, pulsing forever
    (`repeatForever` of a fade+scale `group`). Bigger/brighter when critical.
 2. **Miasma** — an emitter of green haze rising off her.
@@ -205,8 +210,8 @@ two dial settings.
 ### Level-up (transient, event-driven)
 Trigger: when the HUD view-model detects a level increase it emits a `.levelUp`
 flash; the panel calls `scene.playLevelUpEffect()`
-([`FloatingPetPanel.swift:232`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetPanel.swift#L232)).
-Composition ([:814](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift#L814)):
+([`FloatingPetPanel.swift:232`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetPanel.swift#L232)).
+Composition ([:814](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift#L814)):
 1. **Bloom** — a big glow at her feet that flashes in, holds, fades while scaling
    up (a `sequence` of `group`s).
 2. **Fountain** — the upward spark gush (emitter, gated off after 0.55 s).
@@ -228,7 +233,7 @@ schema/contract dance. A new **procedural effect** costs *a function in
 - reuses one (or a few) code-drawn textures, recolored per use,
 - composes the same node + action + emitter vocabulary,
 - anchors to the pet's real opaque bounds (`currentSpriteOpaqueRect`,
-  [:699](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift#L699)) so it sits on her
+  [:699](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift#L699)) so it sits on her
   body at any size/position, with a fallback rect,
 - is cheap (textures cached on first use; transient effects self-remove; the whole
   float already opts out of App Nap only while visible — Ch.10).
@@ -271,7 +276,7 @@ RPG event, interaction, idle).
    assignment.) Internalize: it's all one dot.
 
 2. **Recolor live.** Temporarily change `sicknessWarningGlow` to bright magenta
-   ([:659](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift#L659)), rebuild, and
+   ([:659](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift#L659)), rebuild, and
    use `tcs`/the heart helpers to get her "warning" sick. The haze is now magenta —
    proof the color is a use-site decision, not baked into art. Revert.
 

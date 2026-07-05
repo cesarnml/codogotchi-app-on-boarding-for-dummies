@@ -17,7 +17,7 @@ discipline, not by a compiler. Hold that thought — it's the big gotcha.
 
 ## The shape of `state.json`
 
-From [`state-json.ts`](https://github.com/cesarnml/codogotchi/blob/main/packages/contracts/src/state-json.ts), lightly
+From [`state-json.ts`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/packages/contracts/src/state-json.ts), lightly
 abridged:
 
 ```ts
@@ -39,7 +39,7 @@ abridged:
 }
 ```
 
-🧠 **Plain English.** One JSON object = "here is everything about the *one* pet
+🗣️ **In plain English.** One JSON object = "here is everything about the *one* pet
 right now: what it's doing, who's driving it, how healthy it is, and any urgent
 message for the human."
 
@@ -53,7 +53,7 @@ into a collection keyed by `origin` (the platform). More in Chapter 06.
 
 ## The closed `ActivityState` enum
 
-[`ActivityState.swift:13`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/ActivityState.swift#L13):
+[`ActivityState.swift:13`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/ActivityState.swift#L13):
 
 ```swift
 enum ActivityState: String, Equatable, Codable, CaseIterable {
@@ -102,6 +102,12 @@ would be brittle against forward-compatibility (a newer file with a new state)
 decode boundary absorbs the unknown into `.idle`, and the rest of the app enjoys
 total, compiler-checked coverage.
 
+🗣️ **In plain English.** The pet knows a fixed list of ~25 moods. If the note
+ever contains a mood it's never heard of — say a future version invents one —
+it just shrugs and sits idle instead of crashing. Inside the app, though, the
+list is treated as complete, so the compiler makes sure every single mood has
+artwork and behavior — you *can't* forget one.
+
 🇹🇸 **TS analogy.** It's the difference between:
 ```ts
 switch (s) { case "idle": …; /* forgot a case? TS won't always catch it */ }
@@ -118,7 +124,7 @@ suspect a state-string mismatch between the TS producer and this enum.
 
 ## `StateSnapshot` — the decoded file
 
-[`ActivityState.swift:163`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/ActivityState.swift#L163)
+[`ActivityState.swift:163`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/ActivityState.swift#L163)
 is the Swift mirror of `state.json`:
 
 ```swift
@@ -147,6 +153,10 @@ Swift equivalent of `T | undefined`, but enforced: you cannot use the value
 without unwrapping it. Older file versions omit fields, so optionality encodes
 "this field may not exist in older payloads."
 
+🗣️ **In plain English.** Once the note is read, it becomes a frozen snapshot —
+a photograph, not a live feed. Nothing can quietly change it while the app is
+mid-thought, which kills a whole category of bugs before they exist.
+
 ---
 
 ## Schema versioning & the lockstep gotcha
@@ -160,7 +170,7 @@ This is the thing most likely to trip you, and it's load-bearing for v2.
 | TypeScript | `STATE_JSON_SCHEMA_VERSION = 6` | `packages/contracts/src/state-json.ts:4` |
 | Swift | `EXPECTED_STATE_SCHEMA_VERSION = 6` | `StateJsonReader.swift:8` |
 
-The forward-compat policy ([`StateJsonReader.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/StateJsonReader.swift)):
+The forward-compat policy ([`StateJsonReader.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/StateJsonReader.swift)):
 
 - file `schema_version` **>** what the app expects → **refuse** (return
   `.schemaNewer`, show "update the app" tooltip). The app won't guess at a shape
@@ -182,6 +192,13 @@ different repos with no codegen. You version the DTO and refuse mismatches at
 runtime. Same discipline. The version number *is* the type-safety you'd normally
 get from a shared package.
 
+🗣️ **In plain English.** The note-writer and the note-reader are written in two
+different languages, so no tool can check they agree — instead the note carries
+a version number, like "this form is edition 6." If the reader sees an edition
+newer than it understands, it refuses politely (gray pet, "update me") rather
+than guessing. The classic mistake is updating the edition number on one side
+only — the pet grays out and everyone spends an afternoon confused.
+
 ---
 
 ## How the reader maps errors to visuals
@@ -197,7 +214,7 @@ cases are *typed*, and each maps to a specific user-facing visual downstream:
 | `.schemaNewer(got, expected)` | file from a newer app | desaturated idle + "update the app" |
 | `.success(snapshot)` | all good | the real state, full color |
 
-🧠 **Plain English.** The reader never crashes and never throws past its
+🗣️ **In plain English.** The reader never crashes and never throws past its
 boundary. Every failure mode is a named value the loop knows how to paint. This
 "errors are data, not exceptions" style is exactly the FP instinct you already
 have — the codebase leans on `Result` and typed enums instead of `try/catch`
@@ -218,6 +235,11 @@ directory:
   floating pet (ticket id, plan key, etc.).
 
 You can ignore both until Chapter 03; just know "state isn't the only file."
+
+🗣️ **In plain English.** Besides the main diary, the reader also checks two
+smaller notes: one from the delivery tooling that says "trust me, we're in the
+review phase" (which outranks the guess), and one that puts a little ticket
+badge on the pet.
 
 ---
 

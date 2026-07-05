@@ -12,6 +12,11 @@ title: "08 — Swift Learning Resources"
 > (Apple, Paul Hudson, Kodeco, Big Nerd Ranch) are stable; specific page paths
 > may move.
 
+🗣️ **In plain English.** You don't need to "learn Swift" — you need about five
+ideas well enough to read this one app. This page ranks the reading by urgency
+so you spend hours, not weeks. The v3-era equivalent (refactoring and shipping
+topics) is [Chapter 12](/12-v3-learning-resources/).
+
 ---
 
 ## How to use this page

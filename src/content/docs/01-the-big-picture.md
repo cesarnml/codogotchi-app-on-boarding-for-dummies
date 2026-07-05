@@ -3,7 +3,8 @@ title: "01 — The Big Picture"
 ---
 
 > Goal: by the end you can draw the entire data flow from memory and name every
-> major file's single job.
+> major file's single job. Each section ends with a 🗣️ **plain-English** recap —
+> read those alone for the no-jargon version.
 
 ---
 
@@ -13,10 +14,15 @@ It's a **menu-bar agent** — a macOS app with no Dock icon and no main window,
 just an icon in the top-right menu bar (and an optional floating pet sprite that
 hovers over your desktop). It is configured that way by `LSUIElement = true` in
 `Info.plist` and `app.setActivationPolicy(.accessory)` in
-[`MenubarApp.swift:98`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarApp.swift#L98).
+[`MenubarApp.swift:98`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/MenubarApp.swift#L98).
 
 🇹🇸 **TS analogy.** Think of an Electron tray app with no `BrowserWindow` — only
 a `Tray` icon and maybe a transparent always-on-top window. Same shape, native.
+
+🗣️ **In plain English.** Codogotchi isn't a "window" app at all — it's a tiny
+icon that lives next to your clock, plus an optional cartoon pet that floats
+over everything else. There's nothing to open, minimize, or close; it just sits
+there and reacts.
 
 ---
 
@@ -59,6 +65,12 @@ is the JSON schema, enforced at runtime on both ends (Zod in TS, a hand-written
 decoder in Swift). They are kept in lockstep *by convention and a version
 number*, not by the compiler. See `[02]` for the version-lockstep gotcha.
 
+🗣️ **In plain English.** Two separate programs never talk to each other
+directly. One (your AI tool's hook) leaves a note on disk saying what's
+happening; the other (the pet app) reads that note once a second and acts it
+out. Everything you'll learn in this guide is either "how the note gets
+written" or "how the note becomes a cartoon.
+
 ---
 
 ## The data flow, end to end
@@ -99,7 +111,12 @@ Two things to notice now, because they shape everything later:
    RPG hearts/level — are pushed *only to the floating pet*, through separate
    callback "sinks" wired in `MenubarApp`. (You'll see these as
    `driver.applyAttention = …`, `driver.applyPlatform = …` etc. around
-   [`MenubarApp.swift:301`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarApp.swift#L301).)
+   [`MenubarApp.swift:301`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/MenubarApp.swift#L301).)
+
+🗣️ **In plain English.** The note on disk gets turned into pixels twice: a tiny
+still image up in the menu bar (too small to animate) and the full animated pet
+on your desktop. The basic "what is it doing" signal reaches both; all the
+extras — speech bubbles, badges, hearts — only the big pet gets.
 
 ---
 
@@ -112,7 +129,7 @@ and two distinct concepts**:
 |---|---|---|
 | **Written by** | the TS hook (producer) | the Swift app itself |
 | **Contains** | what the *agent* is doing (activity, hearts, level) | what the *app/window* is doing (is the floating pet visible? where is its window? onboarding done? hook install status) |
-| **Code** | `StateSnapshot` in [`ActivityState.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/ActivityState.swift) | `FloatingAppState` in [`AppState.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/AppState.swift) |
+| **Code** | `StateSnapshot` in [`ActivityState.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/ActivityState.swift) | `FloatingAppState` in [`AppState.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/AppState.swift) |
 | **Polled?** | yes, 1 Hz | no, read at launch + written on change |
 
 🇹🇸 **TS analogy.** `state.json` is like a server-sent feed you subscribe to.
@@ -122,6 +139,12 @@ between launches. Both happen to be JSON files; they are unrelated in purpose.
 This distinction matters for v2: per-platform multi-pet changes the shape of
 **`state.json`** (the activity feed — many platforms now) *and* needs
 **`app-state.json`** to remember a window position **per pet** instead of one.
+
+🗣️ **In plain English.** Two files share the word "state" and mean totally
+different things: one is *the pet's diary* ("my human's AI is busy coding"),
+the other is *the app's own notebook* ("the pet window sits at these
+coordinates, the user finished onboarding"). Mixing them up is the classic
+first-week confusion.
 
 ---
 
@@ -160,17 +183,22 @@ Skim this; you'll meet them properly later. Grouped by job.
 Everything ending in `…ViewModel.swift` is a plain data/logic struct backing a
 settings tab — testable, no AppKit. Ignore them until you care about Settings.
 
+🗣️ **In plain English.** Roughly twenty files matter, in four gangs: the ones
+that *read the note* (the contract), the one that *checks it every second*
+(the loop), the ones that *draw* (renderers), and the glue that *wires it all
+up at launch*. Every other file hangs off one of those four jobs.
+
 ---
 
 ## 🧪 Prove it to yourself
 
 1. **Find the heartbeat.** Open `LivePollingDriver.swift`, find `start()`
-   ([line 166](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L166)). Confirm
+   ([line 166](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/LivePollingDriver.swift#L166)). Confirm
    the `Timer` fires `runTick` every `tickInterval` (default `1.0` s). This is
    *the* loop.
 
 2. **Find the fork.** Open `MenubarApp.swift` around
-   [line 228](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarApp.swift#L228) and read the
+   [line 228](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/MenubarApp.swift#L228) and read the
    `PetStateFanout(...)` construction. Identify the two closures: one updates
    `renderer` (menu bar), one updates `floatingPetController` (floating pet).
    That's the fan-out from the diagram, in real code.

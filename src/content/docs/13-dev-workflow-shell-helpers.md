@@ -15,10 +15,16 @@ title: "13 — Dev-Workflow Shell Helpers"
 
 ## The big idea behind almost all of them
 
+🗣️ **In plain English.** You don't need a real AI session to make the pet do
+things — a handful of small scripts fake the signals: "pretend the agent is
+coding," "pretend she's been ignored for an hour," "pretend a heart just came
+back." This page catalogs those puppet strings, which every demo, screenshot,
+and bug hunt uses.
+
 Recall from [Ch.03](./03-the-polling-loop.md): the app polls `state.json` at 1 Hz,
 **but** it first checks a higher-priority *preview override* file. From
 `PreviewOverrideReader`
-([`LivePollingDriver.swift:470`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L470)):
+([`LivePollingDriver.swift:470`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/LivePollingDriver.swift#L470)):
 
 ```
 $TMPDIR/codogotchi-preview/state-override.json   ← if present + unexpired, WINS

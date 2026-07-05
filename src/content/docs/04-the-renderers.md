@@ -6,6 +6,12 @@ title: "04 — The Renderers"
 > the spritesheet/pet model; and SpriteKit's role. After this you'll know which
 > render code v2 duplicates per-platform.
 
+🗣️ **In plain English.** This chapter is about the last step: a mood becoming
+pixels. The same mood is drawn twice — once as a tiny still picture by the
+clock, once as the animated desktop pet — and all the artwork comes from
+"sprite sheets": big picture-grids where each row is one animation, like a
+flip-book per mood.
+
 There are **two render targets**, fed by the fan-out:
 
 1. **The menu-bar icon** — `MenubarRenderer`. One small static frame. No motion.
@@ -29,7 +35,7 @@ flowchart TD
 
 ## The fan-out itself
 
-[`PetStateFanout.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/PetStateFanout.swift) is
+[`PetStateFanout.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/PetStateFanout.swift) is
 tiny (26 lines) and worth reading whole:
 
 ```swift
@@ -46,7 +52,7 @@ final class PetStateFanout {
 }
 ```
 
-🧠 **Plain English.** "Take one state; hand it to the menu bar, then to the
+🗣️ **In plain English.** "Take one state; hand it to the menu bar, then to the
 floating pet." That's it. It holds two functions and calls both.
 
 🇹🇸 **TS analogy.** `const fanout = (s) => { toMenubar(s); toFloating(s); }`. The
@@ -66,7 +72,7 @@ A "pet" is **one big image (a spritesheet) sliced into a grid of frames**. Each
 *row* is one animation; each *column* a frame in that animation.
 
 ### `CodexPet` — one sheet, 8×9 grid
-[`CodexPet.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/CodexPet.swift). Loads
+[`CodexPet.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/CodexPet.swift). Loads
 `pet.json` + a WebP sheet, validates it's exactly 8 columns × 9 rows, and exposes
 a hardcoded `ActivityState → RowSpec` map:
 
@@ -85,7 +91,7 @@ number }`; `[ActivityState: RowSpec]` is a `Record<ActivityState, RowSpec>`
 (a `Map`, technically — Swift dictionary).
 
 ### `CodogotchiPet` — three tiered sheets
-[`CodogotchiPet.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/CodogotchiPet.swift) holds
+[`CodogotchiPet.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/CodogotchiPet.swift) holds
 up to **three** sheets and resolves a state by trying them in order:
 
 1. **SoA sheet** (`soaRowMap`) — the premium delivery-gate animations.
@@ -95,13 +101,13 @@ up to **three** sheets and resolves a state by trying them in order:
 `frames(for:)` returns the first sheet that has art for the requested state, else
 an empty array.
 
-🧠 **Plain English.** "Use the fanciest art available for this state; fall back
+🗣️ **In plain English.** "Use the fanciest art available for this state; fall back
 to plainer art; if nothing has it, return nothing." Missing sheets are
 soft-degraded — `init` still succeeds, the pet just renders fewer states.
 
 ### Resolution across both pets (the renderer's job)
 `MenubarRenderer.resolveFrames(for:)`
-([line 125](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarRenderer.swift#L125)) layers them:
+([line 125](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/MenubarRenderer.swift#L125)) layers them:
 
 ```
 CodogotchiPet (SoA → Lite-Enhanced → Lite-Basic)   ← try first
@@ -111,7 +117,7 @@ CodexPet (the codex sheet)                          ← fallback
 CodexPet .idle frames                               ← final safety net
 ```
 
-🧠 **Plain English.** Three tiers of "do we have good art for this exact state?",
+🗣️ **In plain English.** Three tiers of "do we have good art for this exact state?",
 ending in "show idle rather than nothing." This is the same forgiving-degradation
 instinct as `unknown → idle` in Chapter 02, now at the *art* layer.
 
@@ -119,7 +125,7 @@ instinct as `unknown → idle` in Chapter 02, now at the *art* layer.
 
 ## Render target A: the menu bar (static)
 
-[`MenubarRenderer.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarRenderer.swift).
+[`MenubarRenderer.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/MenubarRenderer.swift).
 Key facts:
 
 - It paints **one static "hero" frame** per state (`heroFrameIndex = 3`), **not
@@ -136,6 +142,10 @@ recompute the image and call `sink(image)`. `sink` is dependency-injected
 (`statusItem.button.image = $0` in prod, a capture array in tests) — the React
 equivalent of passing a render callback instead of importing the DOM.
 
+🗣️ **In plain English.** The menu-bar icon is deliberately boring: one still
+frame per mood, swapped only when the mood changes, turned gray when the app
+can't trust its data. All the liveliness lives in the floating pet.
+
 ---
 
 ## Render target B: the floating pet (animated)
@@ -143,18 +153,18 @@ equivalent of passing a render callback instead of importing the DOM.
 Three collaborating types — keep their jobs distinct:
 
 ### `FloatingPetController` — lifecycle
-[`FloatingPetController.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetController.swift)
+[`FloatingPetController.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetController.swift)
 (185 lines). Owns **whether and where** the floating pet exists:
 - show / hide, and **persist** that choice + the window frame to `app-state.json`.
 - re-clamp the window when the screen layout changes (monitor unplugged, etc.).
 - forwards `apply(state:)`, `applyAttention`, `applyRPGState`, … straight to the
   panel.
 
-🧠 **Plain English.** The controller is the *stage manager*: it decides if the
+🗣️ **In plain English.** The controller is the *stage manager*: it decides if the
 pet is on stage and remembers where it stood; it doesn't do the acting.
 
 ### `FloatingPetPanelController` (in `FloatingPetPanel.swift`) — the window + decorations
-[`FloatingPetPanel.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetPanel.swift)
+[`FloatingPetPanel.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetPanel.swift)
 (2,647 lines — the big one). It owns:
 - the transparent always-on-top `NSPanel` window,
 - the SpriteKit scene inside it,
@@ -162,7 +172,7 @@ pet is on stage and remembers where it stood; it doesn't do the acting.
   animation-label badge, the **platform-logo chip**, the RPG HUD (hearts/XP), the
   tombstone + revive meter when the pet is "dead."
 
-🧠 **Plain English.** This is the *set* and all the *props*: the window frame, the
+🗣️ **In plain English.** This is the *set* and all the *props*: the window frame, the
 sprite, and every little label/icon hovering around the pet.
 
 ⚠️ **Gotcha / why it's huge.** This one file fuses the controller, two badge
@@ -174,7 +184,7 @@ hold all 2,647 lines at once — find the section you need via the type list:
 `AnimationBadgePanel`, `FloatingInteractionPolicy`.
 
 ### `FloatingPetScene` — the animation loop
-[`FloatingPetScene.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift)
+[`FloatingPetScene.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetScene.swift)
 (1,026 lines). A **SpriteKit** `SKScene` — Apple's 2D game framework.
 
 🇹🇸 **TS analogy.** This is your `<canvas>` with a `requestAnimationFrame` loop.
@@ -189,11 +199,16 @@ loop and the sprite state it mutates belong together — same reason you wouldn'
 shatter a `requestAnimationFrame` across files. This file's size is mostly
 justified; `FloatingPetPanel`'s is not.
 
+🗣️ **In plain English.** Three actors share the floating pet's job: a *stage
+manager* (is the pet on screen, and where), a *set builder* (the window and
+every badge and bubble around the pet), and an *animator* (the game engine
+flipping frames, making her fidget when ignored and jump when clicked).
+
 ---
 
 ## VisualMode and the failure look
 
-[`MenubarRenderer.swift:13`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarRenderer.swift#L13):
+[`MenubarRenderer.swift:13`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/MenubarRenderer.swift#L13):
 
 ```swift
 enum VisualMode: Equatable { case normal; case desaturated }
@@ -204,6 +219,11 @@ too new). It's a *mode*, not a separate pet pose — the same frames, run throug
 grayscale filter. The floating pet has a richer version of this idea (sickness
 levels, ghosting) but the principle is the same: degrade the *look*, keep the
 *pose*.
+
+🗣️ **In plain English.** When something upstream is broken, the pet doesn't
+vanish or crash — it goes grayscale, like a TV losing color. Same pose, drained
+look: instantly readable as "something's wrong with my data" without a single
+error dialog.
 
 ---
 

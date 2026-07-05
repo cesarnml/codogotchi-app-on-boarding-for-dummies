@@ -9,12 +9,18 @@ title: "07 — Hands-on Challenges"
 > You learn this codebase by *changing it and watching what happens*, not by
 > staring. Break things on purpose — `git stash` / `git checkout .` is your undo.
 
+🗣️ **In plain English.** This chapter is a gym, not a lecture. Fourteen
+exercises, easiest first, each one a small safe act of vandalism — change a
+label, speed up a timer, fake a signal — with instructions for checking your
+work and undoing the damage. These built the muscle memory for the v1 → v2
+rewrite; their v2 → v3 siblings live in [Chapter 11](/11-v3-challenges/).
+
 ---
 
 ## Setup: build, run, and drive the pet
 
 You need these three moves before any challenge. (Source:
-[`apps/menubar/README.md`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/README.md).)
+[`apps/menubar/README.md`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/README.md).)
 
 **Build & run from the terminal:**
 ```bash
@@ -34,7 +40,7 @@ bun run mac:test                  # xcodebuild … test
 
 **Drive the pet without touching the real `state.json`.** The app reads a
 *preview override* file every tick (`PreviewOverrideReader` in
-[`LivePollingDriver.swift:470`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L470)).
+[`LivePollingDriver.swift:470`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/LivePollingDriver.swift#L470)).
 Write one and the running app reacts within a second:
 ```bash
 mkdir -p "${TMPDIR}codogotchi-preview"
@@ -68,7 +74,7 @@ respond to a file write — the thesis of Chapter 01, live.
 
 `ActivityState` carries its own UI copy. Change the label for one state.
 
-1. In [`ActivityState.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/ActivityState.swift),
+1. In [`ActivityState.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/ActivityState.swift),
    find `displayLabel` and change `case .implementing: return "Coding"` to
    `return "Cooking 🍳"`.
 2. `bun run mac:build` && relaunch.
@@ -113,7 +119,7 @@ you'll reuse constantly. No code change, no rebuild.
 
 `PlatformAttribution` maps `source_event.origin` strings to a logo chip.
 
-1. Read [`PlatformAttribution.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/PlatformAttribution.swift)
+1. Read [`PlatformAttribution.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/PlatformAttribution.swift)
    in full (45 lines).
 2. Add a fake platform. In the `init?(origin:)` switch add
    `case "zed": self = .zed` and add a `case zed = "PlatformZed"` to the enum and
@@ -140,7 +146,7 @@ AppKit (Ch.03); XCTest mechanics (Ch.05).
 `HalfHeartDecayEngine.displayed(written:lastActivityAt:now:)` computes the
 *displayed* hearts from elapsed time. Pin a behavior with a test.
 
-1. Read [`HalfHeartDecayEngine.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/HalfHeartDecayEngine.swift)
+1. Read [`HalfHeartDecayEngine.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/HalfHeartDecayEngine.swift)
    (26 lines) and the decay constants in
    `packages/contracts/src/decay-constants.ts`.
 2. In `Tests/MenubarTests/HalfHeartDecayTests.swift`, add a test that injects a
@@ -161,7 +167,7 @@ function pattern (`now: () -> Date`) you saw threaded through `LivePollingDriver
 debug-logging-when-stuck habit.
 
 1. In `LivePollingDriver.runTick()`
-   ([line 202](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/LivePollingDriver.swift#L202)) add:
+   ([line 202](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/LivePollingDriver.swift#L202)) add:
    ```swift
    NSLog("TICK result=\(result) ")
    ```
@@ -359,7 +365,7 @@ Sickness has two non-dead tiers: "little sick" and "very sick."
 <details><summary>Hint 1 — what to set, and where it must be set</summary>
 
 The effect is `SicknessLevel(halfHearts:)` → `scene.setSicknessLevel(...)`, called
-from `applyRPGState` ([`FloatingPetPanel.swift:237`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetPanel.swift#L237)).
+from `applyRPGState` ([`FloatingPetPanel.swift:237`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetPanel.swift#L237)).
 That data comes from the poll loop reading **`half_hearts` in the real
 `state.json`** — *not* the preview channel (which only carries `activity_state`,
 exactly like ghost couldn't be previewed). So `tcs` must write the real
@@ -451,7 +457,7 @@ shows only the **PlatformBadge + AnimationBadge** — no sprite, minimal real es
 
 <details><summary>Hint 1 — the badge is already standalone</summary>
 
-`AnimationBadgePanel` ([`FloatingPetPanel.swift:1016`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetPanel.swift#L1016))
+`AnimationBadgePanel` ([`FloatingPetPanel.swift:1016`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/FloatingPetPanel.swift#L1016))
 is its **own** borderless floating `NSPanel` — it does *not* contain the sprite.
 It draws the platform chip **and** the activity-label pill together (one unit,
 configured via `reposition(label:platform:inFlight:…)`). So "PlatformBadge +
@@ -536,7 +542,7 @@ she sticks in the last activity state. **Build:** a small Zzz control beneath th
 XP ring that force-toggles idle; visible only when state ≠ idle.
 
 **The seam (most of it already exists):** `StateJsonWriter.dismissAttention`
-([`StateJsonWriter.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/StateJsonWriter.swift))
+([`StateJsonWriter.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/apps/menubar/Sources/StateJsonWriter.swift))
 *already* writes `activity_state="idle"` preserving other fields. Generalize it to
 `forceIdle(at:)`, add a tiny button view to the HUD, wire the tap to call it
 (`MenubarApp` already passes the state path around — see `onAttentionDismissed`),
@@ -584,7 +590,7 @@ test-first (`bun run mac:test`) — your FP wheelhouse. There's already a
 from `level_fraction`, already in `state.json`. The raw **token count already
 exists** too — the CLI tracks it as `cumulative_claude_tokens` /
 `cumulative_codex_tokens` in `~/.local-xp-cache.json` (`LocalXpCache` in
-[`local-xp-writer.ts`](https://github.com/cesarnml/codogotchi/blob/main/packages/cli/src/local-xp-writer.ts)). It just
+[`local-xp-writer.ts`](https://github.com/cesarnml/codogotchi/blob/archive/v2.5.0/packages/cli/src/local-xp-writer.ts)). It just
 isn't *surfaced* into `state.json` (it's not in `V5Fields`). Two ways to expose it:
 
 - **(a) through the contract (clean):** add the count to `V5Fields` + the
