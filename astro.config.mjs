@@ -104,6 +104,7 @@ export default defineConfig({
             { label: '13 — Dev-Workflow Shell Helpers', slug: '13-dev-workflow-shell-helpers' },
             { label: '14 — macOS Primitives Primer', slug: '14-macos-primitives-primer' },
             { label: '15 — Procedural Effects Deep-Dive', slug: '15-procedural-effects-deep-dive' },
+            { label: '16 — The ~/.codogotchi Disk Contract', slug: '16-disk-contract' },
           ],
         },
       ],

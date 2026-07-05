@@ -44,6 +44,10 @@ same single sticky note, so they kept overwriting each other. In v2, each tool
 *session* gets its own sticky note in a shared folder, named after who wrote
 it. Nobody overwrites anybody; the app just reads the whole folder.
 
+(The complete file-by-file catalog — writers, readers, clocks, delete-safety
+— lives in [Chapter 16](/16-disk-contract/); this chapter narrates, that page
+owns the tables.)
+
 Two readers consume the directory, both applying a **2-hour mtime staleness
 filter** (a slice untouched for 2h is invisible, as if deleted):
 
@@ -226,6 +230,10 @@ stateDiagram-v2
 | Dismiss TTL (idle-frozen) | pool `update()` | 300s, user-configurable, `0` = never |
 | Reader staleness | `StateJsonReader` mtime filter | 2h, hard-coded |
 | Prune horizon | [`SlicePruner`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/SlicePruner.swift) | 24h, 30-min timer |
+
+(These clocks and the full `customization.json` key reference are maintained
+in [Chapter 16](/16-disk-contract/) — treat that page as canonical if the two
+ever disagree.)
 
 The v3 **Sessions panel** is essentially this diagram as UI (Active / Live /
 Archived tabs) — see the v3 roadmap note in the main repo:
