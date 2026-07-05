@@ -1,5 +1,5 @@
 ---
-title: "10 — macOS Primitives Primer"
+title: "14 — macOS Primitives Primer"
 ---
 
 > Goal: a reference for the Apple platform primitives codogotchi leans on —
@@ -234,7 +234,7 @@ the **wake-from-sleep** observer that triggers an immediate poll
 
 ### `ProcessInfo` — env vars **and** App Nap opt-out
 **What:** `ProcessInfo.processInfo.environment` reads env vars (all the
-`CODOGOTCHI_*` knobs, Ch.02/09). `beginActivity(options:reason:)` tells macOS
+`CODOGOTCHI_*` knobs, Ch.02/13). `beginActivity(options:reason:)` tells macOS
 "don't throttle me" (opt out of **App Nap**, the power-saver that slows
 background apps). **Ours:** env reads throughout; the App-Nap opt-out is held
 **only while the floating pet is visible** so menu-bar-only mode stays cheap

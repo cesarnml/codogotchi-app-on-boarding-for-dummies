@@ -1,5 +1,5 @@
 ---
-title: "13 — The Seams: Why v3 Wants a Redesign"
+title: "10 — The Seams: Why v3 Wants a Redesign"
 ---
 
 > Goal: read the v2 code *critically*. Each section names a seam — a place
@@ -19,7 +19,7 @@ more weight on top.
 
 ## Seam 1 — Stringly-typed window keys
 
-**Symptom.** Chapter 12's key ladder (`origin` / `origin:session_id` /
+**Symptom.** Chapter 9's key ladder (`origin` / `origin:session_id` /
 `"combined"`) is discriminated by string inspection, re-derived at every site
 that needs it:
 
@@ -148,7 +148,7 @@ duct tape becomes the store's actual API.
 
 The best illustration is a real v3-preview bug chain. "Show Pet" on a hidden,
 TTL-expired session silently did nothing. Root cause analysis had to traverse
-**all three clocks from Chapter 12** (dismiss TTL suppressing re-spawn; reader
+**all three clocks from Chapter 9** (dismiss TTL suppressing re-spawn; reader
 staleness hiding the slice from the snapshot; prune horizon deleting the file
 outright), the hidden-keys set that lives *outside* those clocks, and the
 string-keyed targeting rules for which slice to rewrite. The fix landed in
@@ -157,7 +157,7 @@ and a menu-open culling pass for the fully-pruned case.
 
 None of those clocks is wrong individually. But **no single type owns "what
 states can a session be in"** — the Active/Live/Archived/Pruned diagram in
-Chapter 12 exists only in this guide and in code comments. When lifecycle is
+Chapter 9 exists only in this guide and in code comments. When lifecycle is
 implicit, every feature that touches it (Show, Hide, prune, session caps, the
 upcoming Sessions panel) re-discovers it by debugging.
 
@@ -174,7 +174,7 @@ repo):
 2. **Distribution** — notarized DMG → Sparkle auto-updates + Homebrew cask →
    App Store investigation (sandboxing vs the hook-install model is the open
    question).
-3. **Sessions panel** — Chapter 12's lifecycle diagram as a Settings tab
+3. **Sessions panel** — Chapter 9's lifecycle diagram as a Settings tab
    (Active / Live / Archived), with per-row Show/Prune.
 4. **Consolidation** — the seams above, sequenced so refactors land where they
    unblock features: `WindowKey` before the Sessions panel; the prompt
@@ -186,7 +186,7 @@ No big-bang rewrite. Each seam pays its own way or waits.
 
 ## Prove it to yourself
 
-1. Do Chapter 12's exercise 3 (`grep -rn '"combined"' apps/menubar/Sources`).
+1. Do Chapter 9's exercise 3 (`grep -rn '"combined"' apps/menubar/Sources`).
    Classify each hit: parse site, policy decision, or serialization. How many
    would a `WindowKey` enum delete outright?
 2. Diff the two `presentHidePrompt` implementations in

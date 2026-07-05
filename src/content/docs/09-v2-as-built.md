@@ -1,9 +1,9 @@
 ---
-title: "12 — v2 As Built: Slices, Keys & the Window Pool"
+title: "09 — v2 As Built: Slices, Keys & the Window Pool"
 ---
 
 > Goal: hold the *shipped* v2 architecture in your head — every layer between a
-> hook firing and N pets on screen — so that Chapter 13's critique (and the v3
+> hook firing and N pets on screen — so that Chapter 10's critique (and the v3
 > redesign it motivates) reads as obvious rather than opinionated.
 
 Chapter 06 was written *before* v2 landed and describes the plan. This chapter
@@ -71,7 +71,7 @@ flowchart TD
 
 The discriminators are string operations: colon-split for session identity,
 `== "combined"` for the shared window. There is no enum. Remember that for
-Chapter 13.
+Chapter 10.
 
 ---
 
@@ -158,7 +158,7 @@ factories and three effective shapes:
 | **Combined** | Whichever of the above `combined_minimalist_enabled` selects, keyed `"combined"` | Same as its renderer |
 
 Every piece of chrome is **its own floating `NSPanel`**, re-anchored to the pet
-panel on drags and poll ticks (Chapter 10 explains why). Right-click anywhere
+panel on drags and poll ticks (Chapter 14 explains why). Right-click anywhere
 on a window's chrome routes into one shared prompt
 (`FloatingPetHidePrompt` pills: Force Idle / Rename / Prune / mode switch /
 Panel Size / Hide), coordinated across windows by
@@ -166,7 +166,7 @@ Panel Size / Hide), coordinated across windows by
 
 🇹🇸 **TS analogy.** The pool is a reconciler: `update()` is `render()` diffing
 desired children against `windows` (the previous vnode tree), with the
-factories as `createElement`. Except — and this matters for Chapter 13 — the
+factories as `createElement`. Except — and this matters for Chapter 10 — the
 "diff" is hand-written imperative steps, not a derived pure value.
 
 ---
@@ -212,4 +212,4 @@ Archived tabs) — see the v3 roadmap note in the main repo:
    (`fswatch ~/.codogotchi/state.d` or just `cat` before/after).
 3. In `FloatingPetWindowPool.swift`, find the exact line where `"combined"`
    the *string* is compared. Count how many files perform that comparison.
-   Keep the number in mind for Chapter 13.
+   Keep the number in mind for Chapter 10.

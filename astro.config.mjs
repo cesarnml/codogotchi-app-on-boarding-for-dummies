@@ -19,6 +19,15 @@ function remarkMermaid() {
 
 export default defineConfig({
   site: 'https://codogotchifordummies.vercel.app',
+  // Chapter renumbering (v3 restructure): old slugs → new homes, so inbound
+  // links and bookmarks keep working.
+  redirects: {
+    '/09-dev-workflow-shell-helpers': '/13-dev-workflow-shell-helpers',
+    '/10-macos-primitives-primer': '/14-macos-primitives-primer',
+    '/11-procedural-effects-deep-dive': '/15-procedural-effects-deep-dive',
+    '/12-v2-as-built': '/09-v2-as-built',
+    '/13-the-seams-v3-redesign': '/10-the-seams-v3-redesign',
+  },
   markdown: {
     remarkPlugins: [remarkMermaid],
   },
@@ -69,25 +78,32 @@ export default defineConfig({
           ],
         },
         {
-          label: 'The v2 architecture (v3 prep)',
-          items: [
-            { label: '12 — v2 As Built: Slices, Keys & the Window Pool', slug: '12-v2-as-built' },
-            { label: '13 — The Seams: Why v3 Wants a Redesign', slug: '13-the-seams-v3-redesign' },
-          ],
-        },
-        {
-          label: 'Hands-on',
+          label: 'v1 → v2 Hands-on',
           items: [
             { label: '07 — Challenges', slug: '07-challenges' },
             { label: '08 — Swift Learning Resources', slug: '08-swift-learning-resources' },
           ],
         },
         {
+          label: 'The v2 architecture (v3 prep)',
+          items: [
+            { label: '09 — v2 As Built: Slices, Keys & the Window Pool', slug: '09-v2-as-built' },
+            { label: '10 — The Seams: Why v3 Wants a Redesign', slug: '10-the-seams-v3-redesign' },
+          ],
+        },
+        {
+          label: 'v2 → v3 Hands-on',
+          items: [
+            { label: '11 — v2 → v3 Challenges', slug: '11-v3-challenges' },
+            { label: '12 — v3 Learning Resources', slug: '12-v3-learning-resources' },
+          ],
+        },
+        {
           label: 'Reference',
           items: [
-            { label: '09 — Dev-Workflow Shell Helpers', slug: '09-dev-workflow-shell-helpers' },
-            { label: '10 — macOS Primitives Primer', slug: '10-macos-primitives-primer' },
-            { label: '11 — Procedural Effects Deep-Dive', slug: '11-procedural-effects-deep-dive' },
+            { label: '13 — Dev-Workflow Shell Helpers', slug: '13-dev-workflow-shell-helpers' },
+            { label: '14 — macOS Primitives Primer', slug: '14-macos-primitives-primer' },
+            { label: '15 — Procedural Effects Deep-Dive', slug: '15-procedural-effects-deep-dive' },
           ],
         },
       ],

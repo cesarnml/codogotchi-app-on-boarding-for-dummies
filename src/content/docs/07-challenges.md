@@ -238,7 +238,7 @@ re-timed. This is the most valuable debugging exercise in the doc because the
 fix is **not** in the Swift.
 
 ### The symptom (as observed)
-After `tcis` ([`test-codogotchi-idle-set`](./09-dev-workflow-shell-helpers.md),
+After `tcis` ([`test-codogotchi-idle-set`](./13-dev-workflow-shell-helpers.md),
 the idle-escalation demo) finishes its run, the pet is **stuck animating
 frustrated**. Worse: even after a real activity animation plays, or you force her
 back to idle with a mouse click-hold, she **slips back to frustrated within
@@ -350,7 +350,7 @@ Sickness has two non-dead tiers: "little sick" and "very sick."
    numbers **half-hearts or full hearts**? (Read `SicknessLevel(halfHearts:)`
    carefully — and `MAX_HALF_HEARTS`.)
 3. Can the preview-override channel (`tclb`/`tcle`) carry that number? Why or why
-   not? (Re-read the **ghost exception**, [Ch.09](./09-dev-workflow-shell-helpers.md).)
+   not? (Re-read the **ghost exception**, [Ch.13](./13-dev-workflow-shell-helpers.md).)
 4. If you write the number into `~/.codogotchi/state.json` once, name **two**
    separate reasons it won't stay put.
 
@@ -563,7 +563,7 @@ want it shipped fast — it's a real bug).
 thresholds in `FloatingPetScene` (see `maybeEscalateIdle`,
 [Ch.03](./03-the-polling-loop.md)/Challenge 8). Compute an **elapsed-fraction**
 toward the next threshold, plumb it to `AnimationBadgePanel`, and draw a fill
-(reuse the procedural-draw approach from [Ch.11](./11-procedural-effects-deep-dive.md),
+(reuse the procedural-draw approach from [Ch.15](./15-procedural-effects-deep-dive.md),
 or a simple bar/ring in the badge view). Only meaningful while `state == .idle`
 and `supportsIdleEscalation`.
 

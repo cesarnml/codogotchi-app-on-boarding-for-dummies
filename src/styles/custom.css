@@ -333,13 +333,35 @@ div.mermaid {
   --pagefind-ui-tag:        var(--cg-terracotta-bg);
 }
 
-/* ── Theme select hover ───────────────────────────────────────────────── */
-/* Starlight's select label hover sets `color: var(--sl-color-white)`, which
-   this light theme maps to cream — cream-on-cream, i.e. the label vanishes on
-   hover. Match the GitHub icon's terracotta instead. The :where() scoping on
-   Starlight's own rule has zero specificity, so no !important is needed. */
+/* ── Light-mode hover contrast fixes ─────────────────────────────────── */
+/* Starlight hovers several components to `color: var(--sl-color-white)` —
+   in its own palettes that token is the STRONGEST text color (near-black in
+   light mode). This theme maps it to cream, so every such hover goes
+   cream-on-cream and vanishes. Rather than flip the global token (other
+   rules here depend on the current mapping), override each affected surface
+   in light mode. Starlight's own rules use zero-specificity :where()
+   scoping, so no !important is needed. */
+
+/* Theme select — hover matches the GitHub icon's terracotta. */
 :root[data-theme='light'] starlight-theme-select label:hover {
   color: var(--cg-terracotta);
+}
+
+/* Sidebar links — ink at rest, terracotta on hover. Scoped to non-current
+   links so the active-page pill keeps its own treatment. */
+:root[data-theme='light'] nav.sidebar a:not([aria-current='page']):hover {
+  color: var(--cg-terracotta);
+}
+
+/* Header social icons (GitHub) — terracotta at rest, darker terracotta on
+   hover instead of vanishing. */
+:root[data-theme='light'] .social-icons a:hover {
+  color: var(--sl-color-accent-high);
+}
+
+/* In-content links — terracotta at rest, darker terracotta on hover. */
+:root[data-theme='light'] .sl-markdown-content a:hover:not(:where(.not-content *)) {
+  color: var(--sl-color-accent-high);
 }
 
 /* ── Mobile theme toggle ─────────────────────────────────────────────────── */

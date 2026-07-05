@@ -1,5 +1,5 @@
 ---
-title: "11 — Procedural Effects Deep-Dive"
+title: "15 — Procedural Effects Deep-Dive"
 ---
 
 > Goal: deeply understand the SpriteKit effect layer that makes the pet feel
@@ -8,7 +8,7 @@ title: "11 — Procedural Effects Deep-Dive"
 > this chapter teaches the *toolkit generatively*: not just "here's what the two
 > effects do," but "here's the kit, here's how to invent new life with it."
 >
-> Prereq: [Ch.10](./10-macos-primitives-primer.md)'s SpriteKit section
+> Prereq: [Ch.14](./14-macos-primitives-primer.md)'s SpriteKit section
 > (`SKView`/`SKScene`/`SKSpriteNode`/`SKTexture`/`SKAction`). All effect code lives
 > in [`FloatingPetScene.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetScene.swift),
 > lines ~646–1005.
