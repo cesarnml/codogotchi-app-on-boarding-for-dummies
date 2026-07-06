@@ -105,6 +105,7 @@ export default defineConfig({
             { label: '14 — macOS Primitives Primer', slug: '14-macos-primitives-primer' },
             { label: '15 — Procedural Effects Deep-Dive', slug: '15-procedural-effects-deep-dive' },
             { label: '16 — The ~/.codogotchi Disk Contract', slug: '16-disk-contract' },
+            { label: '17 — App Store: What Would Have to Change', slug: '17-app-store-requirements' },
           ],
         },
       ],
