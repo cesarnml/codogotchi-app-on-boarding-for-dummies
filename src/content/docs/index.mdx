@@ -38,3 +38,15 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
     Maps every Swift idiom you'll trip over — `@MainActor`, `weak self`, protocols, `Result` — to a TypeScript equivalent you already know.
   </Card>
 </CardGrid>
+
+## Ready to actually contribute?
+
+Reading this guide gets you the mental model. Here's how to turn that into a merged PR:
+
+1. **Fork [cesarnml/codogotchi](https://github.com/cesarnml/codogotchi)**, then follow [`CONTRIBUTING.md`](https://github.com/cesarnml/codogotchi/blob/main/CONTRIBUTING.md) for setup (`bun install`, `bun run ci:quiet`).
+2. **Pick an issue sized to your comfort level.** Issues are labeled `difficulty: 1` through `8` — start with a `2` or `3` if it's your first PR here.
+   ```bash
+   gh issue list --label "difficulty: 2"
+   ```
+3. **See what v3 needs.** The [v3 Polish Roadmap discussion](https://github.com/cesarnml/codogotchi/discussions/160) lays out what's already shipped in v2.6.0 and what's still open — UX gaps, the Sessions panel, distribution/notarization, an architectural consolidation pass, and fleshing out the RPG tab. It's not a finalized scope, so if you want to argue for, against, or add a direction, that thread is the place.
+4. **Questions are welcome.** Open an issue with the `question` label, or ask in your PR — see the [Code of Conduct](https://github.com/cesarnml/codogotchi/blob/main/CODE_OF_CONDUCT.md) for the full welcome note to newcomers.
