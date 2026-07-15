@@ -4,7 +4,7 @@ description: A TypeScript / FP developer's guide to the Codogotchi macOS menubar
 template: splash
 hero:
   title: Codogotchi for Dummies
-  tagline: A TypeScript / FP developer's field guide to the Codogotchi macOS menubar app — the learning path that drove v2 (per-platform multi-pet), now extended to the v2-as-built architecture and the v3 consolidation ahead.
+  tagline: A TypeScript / FP developer's field guide to the Codogotchi macOS menubar app — the learning path that drove v2 (per-platform multi-pet), the v2-as-built architecture, the seams that motivated v3, and the consolidation as built.
   actions:
     - text: Start reading
       link: /01-the-big-picture/
@@ -25,14 +25,17 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
   <Card title="Core pipeline (01–06)" icon="open-book">
     Maps the state → render spine you need to understand v2. Read in order — each chapter ends with a "prove it to yourself" exercise.
   </Card>
-  <Card title="v2 as built → v3 (09–10)" icon="puzzle">
-    The shipped v2 architecture — state.d slices, the window pool, the session lifecycle — then a critical read of its seams and the v3 redesign they motivate.
+  <Card title="v2 as built → seams (09–10)" icon="puzzle">
+    The shipped v2 architecture — state.d slices, the window pool, the session lifecycle — then a critical read of its seams and the v3 redesign they motivated.
   </Card>
   <Card title="Hands-on, both eras (07–08 · 11–12)" icon="rocket">
     Tiered-hint challenges and curated resources: 07–08 ramped v1 → v2; 11–12 do the same for v2 → v3 (seam-breaking exercises, notarization/Sparkle reading).
   </Card>
-  <Card title="Reference (13–17)" icon="laptop">
-    Dev helpers, platform APIs (NSPanel, SpriteKit, AppKit), the procedural-effects engine, and the ~/.codogotchi disk contract, and the App Store requirements primer.
+  <Card title="v3 as built (13)" icon="approve-check">
+    What phases 16–20 actually landed — typed WindowKey, drawers, derive/diff/apply, fold identity, sticky slice clocks — and how Chapter 10's seams were closed.
+  </Card>
+  <Card title="Reference (14–18)" icon="laptop">
+    Dev helpers, platform APIs (NSPanel, SpriteKit, AppKit), the procedural-effects engine, the ~/.codogotchi disk contract, and the App Store requirements primer.
   </Card>
   <Card title="Swift for TS devs (05)" icon="translate">
     Maps every Swift idiom you'll trip over — `@MainActor`, `weak self`, protocols, `Result` — to a TypeScript equivalent you already know.

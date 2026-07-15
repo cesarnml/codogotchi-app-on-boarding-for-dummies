@@ -1,5 +1,5 @@
 ---
-title: "17 — App Store Distribution: What Would Have to Change"
+title: "18 — App Store Distribution: What Would Have to Change"
 ---
 
 > Goal: everything you need to know about Mac App Store requirements, assuming
@@ -67,7 +67,7 @@ Codogotchi's hooks is *exactly* "wandering into other apps' apartments."
 
 ## Where Codogotchi collides, point by point
 
-Hold Chapter 09's producer/consumer split and Chapter 16's disk contract in
+Hold Chapter 09's producer/consumer split and Chapter 17's disk contract in
 mind. The collisions, worst first:
 
 ### 1. Hook installation writes into other apps' config *(hard collision)*
@@ -86,7 +86,7 @@ terminal," like Docker Desktop or many dev tools do.
 
 ### 2. `~/.codogotchi` itself *(hard collision, clean solution)*
 
-The whole contract lives in `~/.codogotchi` (Chapter 16). Inside the sandbox,
+The whole contract lives in `~/.codogotchi` (Chapter 17). Inside the sandbox,
 the app reading `~/.codogotchi` would silently read
 `…/Containers/…/Data/.codogotchi` — an empty directory — while the hooks keep
 writing to the *real* one. Producer and consumer would each see a different
@@ -100,7 +100,7 @@ Two legal fixes:
   sandboxed app gets it via the app-group entitlement; the hooks — plain
   non-sandboxed processes — can write anywhere, so they just need the path.
   And the plumbing for that *already exists*: every path in the contract
-  resolves through `CodogotchiFolders` / `CODOGOTCHI_HOME` (Ch.16), so the
+  resolves through `CodogotchiFolders` / `CODOGOTCHI_HOME` (Ch.17), so the
   CLI writing hooks that set `CODOGOTCHI_HOME` to the group container is a
   configuration change, not a rewrite.
 - **Security-scoped bookmark.** First launch shows an open panel pointed at
@@ -126,7 +126,7 @@ future monetization of the MAS build specifically.
 
 Reviewers run the app cold, with no AI tools installed. If they see a
 menu-bar icon that does nothing, that's a metadata/minimal-functionality
-rejection risk. The MAS build needs the demo mode (Ch.13's fixture driver) or
+rejection risk. The MAS build needs the demo mode (Ch.14's fixture driver) or
 an obvious sample-pet experience reachable without any hook installed, plus
 review notes explaining the companion CLI.
 
@@ -151,7 +151,7 @@ Worth naming, because the scary list above isn't the whole story:
 - **Launch at login** via `SMAppService` — sandbox-friendly.
 - **Network** (the gallery fetch, Convex) — just the `network.client`
   entitlement, routine.
-- Reading/writing **inside** the group container — the entire Chapter 16
+- Reading/writing **inside** the group container — the entire Chapter 17
   contract works unchanged once the path moves.
 
 🗣️ **In plain English.** The pet itself — the windows, the animation, the
@@ -199,7 +199,7 @@ legitimate outcome of the investigation, not a failure.
 
 1. **See the container lie.** Sandbox any toy app (or read up on
    `NSHomeDirectory()` under sandboxing) and print `NSHomeDirectory()` —
-   confirm it's the container path, not `/Users/you`. Now re-read Chapter 16
+   confirm it's the container path, not `/Users/you`. Now re-read Chapter 17
    and name every path that would silently break.
 2. **Find the hinge.** In `CodogotchiFolders.dataFolderURL()`, confirm every
    contract path already resolves through one function honoring

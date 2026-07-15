@@ -1,5 +1,5 @@
 ---
-title: "14 — macOS Primitives Primer"
+title: "15 — macOS Primitives Primer"
 ---
 
 > Goal: a reference for the Apple platform primitives codogotchi leans on —

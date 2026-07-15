@@ -1,10 +1,11 @@
 ---
-title: "16 — The ~/.codogotchi Disk Contract"
+title: "17 — The ~/.codogotchi Disk Contract"
 ---
 
 > Goal: the lookup card for every file the app reads or writes. Chapters 01–02
-> teach the *idea* of the disk contract and Chapter 09 narrates how v2 uses it;
-> this page owns the tables. Come back here whenever you need "who writes this
+> teach the *idea* of the disk contract and Chapter 09 narrates how v2 uses it
+> ([Chapter 13](/13-v3-as-built/) for the v3 overlay); this page owns the tables.
+> Come back here whenever you need "who writes this
 > file, who reads it, which timer governs it, and what breaks if I delete it."
 
 Everything lives under **`~/.codogotchi/`**, overridable with the

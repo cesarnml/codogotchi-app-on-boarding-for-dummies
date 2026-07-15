@@ -19,14 +19,20 @@ function remarkMermaid() {
 
 export default defineConfig({
   site: 'https://codogotchifordummies.vercel.app',
-  // Chapter renumbering (v3 restructure): old slugs → new homes, so inbound
-  // links and bookmarks keep working.
+  // Chapter renumbering (v3 restructure + v3-as-built insert): old slugs →
+  // new homes, so inbound links and bookmarks keep working.
   redirects: {
-    '/09-dev-workflow-shell-helpers': '/13-dev-workflow-shell-helpers',
-    '/10-macos-primitives-primer': '/14-macos-primitives-primer',
-    '/11-procedural-effects-deep-dive': '/15-procedural-effects-deep-dive',
+    '/09-dev-workflow-shell-helpers': '/14-dev-workflow-shell-helpers',
+    '/10-macos-primitives-primer': '/15-macos-primitives-primer',
+    '/11-procedural-effects-deep-dive': '/16-procedural-effects-deep-dive',
     '/12-v2-as-built': '/09-v2-as-built',
     '/13-the-seams-v3-redesign': '/10-the-seams-v3-redesign',
+    // Reference block bumped +1 when Chapter 13 (v3 as built) landed
+    '/13-dev-workflow-shell-helpers': '/14-dev-workflow-shell-helpers',
+    '/14-macos-primitives-primer': '/15-macos-primitives-primer',
+    '/15-procedural-effects-deep-dive': '/16-procedural-effects-deep-dive',
+    '/16-disk-contract': '/17-disk-contract',
+    '/17-app-store-requirements': '/18-app-store-requirements',
   },
   markdown: {
     remarkPlugins: [remarkMermaid],
@@ -99,13 +105,19 @@ export default defineConfig({
           ],
         },
         {
+          label: 'v3 as built',
+          items: [
+            { label: '13 — v3 As Built: Drawers, Keys & Derive/Diff/Apply', slug: '13-v3-as-built' },
+          ],
+        },
+        {
           label: 'Reference',
           items: [
-            { label: '13 — Dev-Workflow Shell Helpers', slug: '13-dev-workflow-shell-helpers' },
-            { label: '14 — macOS Primitives Primer', slug: '14-macos-primitives-primer' },
-            { label: '15 — Procedural Effects Deep-Dive', slug: '15-procedural-effects-deep-dive' },
-            { label: '16 — The ~/.codogotchi Disk Contract', slug: '16-disk-contract' },
-            { label: '17 — App Store: What Would Have to Change', slug: '17-app-store-requirements' },
+            { label: '14 — Dev-Workflow Shell Helpers', slug: '14-dev-workflow-shell-helpers' },
+            { label: '15 — macOS Primitives Primer', slug: '15-macos-primitives-primer' },
+            { label: '16 — Procedural Effects Deep-Dive', slug: '16-procedural-effects-deep-dive' },
+            { label: '17 — The ~/.codogotchi Disk Contract', slug: '17-disk-contract' },
+            { label: '18 — App Store: What Would Have to Change', slug: '18-app-store-requirements' },
           ],
         },
       ],

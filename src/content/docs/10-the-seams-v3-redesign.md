@@ -254,18 +254,26 @@ repo):
 
 No big-bang rewrite. Each seam pays its own way or waits.
 
+> **Update:** Track 4 (phases 16–18) plus the immediate sequels (19–20) have
+> landed. Read [Chapter 13](/13-v3-as-built/) for the as-built map and a
+> seam-by-seam ledger of what closed. Track 2 (distribution) is still open.
+
 ---
 
 ## Prove it to yourself
 
 1. Do Chapter 9's exercise 3 (`grep -rn '"combined"' apps/menubar/Sources`).
    Classify each hit: parse site, policy decision, or serialization. How many
-   would a `WindowKey` enum delete outright?
+   would a `WindowKey` enum delete outright? *(After Chapter 13: re-run and
+   confirm policy hits are gone.)*
 2. Diff the two `presentHidePrompt` implementations in
    `FloatingPetPanel.swift` (Own's `FloatingPetInteractionView` vs
    `MinimalistBadgeView`). List every behavioral difference, then decide for
    each: intentional (window-shape capability) or drift (nobody noticed)?
+   *(After Chapter 13: the two implementations are gone — audit against
+   `window-capability-matrix.md` instead.)*
 3. Sketch the `DesiredWindows` value type for Seam 4 — what fields does it
    need so `apply` requires *zero* additional policy decisions? Check your
    sketch against the real `update()` steps: anything you missed is a policy
-   the current code hides inside an effect.
+   the current code hides inside an effect. *(After Chapter 13: compare your
+   sketch to `Pool/Derive/`.)*

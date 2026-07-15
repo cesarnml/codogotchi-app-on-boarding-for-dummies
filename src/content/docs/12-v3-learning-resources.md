@@ -77,7 +77,7 @@ Ruby. Search: `homebrew cask cookbook new cask pr`.
 
 ## Tier 2 — The App Store investigation
 
-> Start with [Chapter 17](/17-app-store-requirements/) — the requirements
+> Start with [Chapter 18](/18-app-store-requirements/) — the requirements
 > primer grounded in this codebase — then use these for depth.
 
 **8. App Sandbox documentation (Apple) — entitlements, security-scoped
@@ -116,5 +116,5 @@ releases become frequent.
 | 2 | Ch.10 + Challenges 4–5 | you've *felt* two seams break |
 | 3 | Tier 0 #1 + Challenge 6 | `WindowKey` prototype compiles |
 | 4 | Tier 0 #2–3 + Challenge 7 | `derive/diff/apply` sketch reviewed |
-| 5 | Tier 1 #5 skim; run `codesign -dv` on a local build | you can read the current signing state |
+| 5 | Ch.13 skim + Tier 1 #5; run `codesign -dv` on a local build | as-built map + current signing state |
 | weekend | Challenge 8 + the v3 roadmap note | you can scope a v3 phase yourself |

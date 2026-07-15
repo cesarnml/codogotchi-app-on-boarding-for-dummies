@@ -45,7 +45,7 @@ same single sticky note, so they kept overwriting each other. In v2, each tool
 it. Nobody overwrites anybody; the app just reads the whole folder.
 
 (The complete file-by-file catalog — writers, readers, clocks, delete-safety
-— lives in [Chapter 16](/16-disk-contract/); this chapter narrates, that page
+— lives in [Chapter 17](/17-disk-contract/); this chapter narrates, that page
 owns the tables.)
 
 Two readers consume the directory, both applying a **2-hour mtime staleness
@@ -66,9 +66,9 @@ asking "which kind of key am I holding?":
 
 ```mermaid
 flowchart TD
-    slice["slice filename<br/><code>claude_code:0195….json</code>"] -->|parseSliceFilename| rk
-    rk["render key<br/><code>claude_code:0195…</code> (session pets ON)<br/><code>claude_code</code> (session pets OFF)"] -->|"windowKey(for:) folds combined-mode origins"| wk
-    wk["window key — one floating window each<br/><code>claude_code:0195…</code> · <code>cursor</code> · <code>&quot;combined&quot;</code>"]
+    slice["slice filename<br/>claude_code:0195....json"] -->|parseSliceFilename| rk
+    rk["render key<br/>claude_code:0195... session pets ON<br/>claude_code session pets OFF"] -->|windowKey folds combined-mode origins| wk
+    wk["window key — one floating window each<br/>claude_code:0195... / cursor / combined"]
 ```
 
 1. **Slice key** — what's on disk. Always `origin:session_id`.
@@ -187,7 +187,7 @@ factories and three effective shapes:
 | **Combined** | Whichever of the above `combined_minimalist_enabled` selects, keyed `"combined"` | Same as its renderer |
 
 Every piece of chrome is **its own floating `NSPanel`**, re-anchored to the pet
-panel on drags and poll ticks (Chapter 14 explains why). Right-click anywhere
+panel on drags and poll ticks (Chapter 15 explains why). Right-click anywhere
 on a window's chrome routes into one shared prompt
 (`FloatingPetHidePrompt` pills: Force Idle / Rename / Prune / mode switch /
 Panel Size / Hide), coordinated across windows by
@@ -232,18 +232,21 @@ stateDiagram-v2
 | Prune horizon | [`SlicePruner`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/SlicePruner.swift) | 24h, 30-min timer |
 
 (These clocks and the full `customization.json` key reference are maintained
-in [Chapter 16](/16-disk-contract/) — treat that page as canonical if the two
+in [Chapter 17](/17-disk-contract/) — treat that page as canonical if the two
 ever disagree.)
 
 The v3 **Sessions panel** is essentially this diagram as UI (Active / Live /
-Archived tabs) — see the v3 roadmap note in the main repo:
+Archived tabs). How that diagram became a real type — and how the pool was
+rewritten underneath it — is [Chapter 13](/13-v3-as-built/). The roadmap note
+that scoped the work still lives in the main repo:
 `notes/private/codogotchi-v3-polish-roadmap.md`.
 
 🗣️ **In plain English.** A pet passes through four ages: on screen → recently
 active but tucked away → dormant (invisible, still recoverable) → gone for
 good. Three different timers drive those transitions, they don't know about
 each other, and today the user can't see any of it — which is exactly why v3
-adds a Sessions panel that lays the ages out in the open.
+adds a Sessions panel that lays the ages out in the open. (Shipped — see
+Chapter 13.)
 
 ---
 

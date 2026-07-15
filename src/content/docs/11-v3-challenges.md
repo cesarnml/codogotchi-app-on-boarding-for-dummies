@@ -3,14 +3,16 @@ title: "11 — v2 → v3 Hands-on Challenges"
 ---
 
 > Goal: stop reading, start touching — the v3 edition. Chapters 09–10 gave you
-> the shipped v2 architecture and its seams; these challenges make you *feel*
-> both before you refactor anything. Same rules as Chapter 07: ordered easy →
-> hard, each says what it teaches, the files, and **how to verify**. Hints are
-> tiered — unfold one at a time, only when stuck.
+> the shipped v2 architecture and its seams; [Chapter 13](/13-v3-as-built/) shows
+> what consolidation actually shipped. These challenges still make you *feel*
+> the pre-refactor pain before you read the as-built map cold. Same rules as
+> Chapter 07: ordered easy → hard, each says what it teaches, the files, and
+> **how to verify**. Hints are tiered — unfold one at a time, only when stuck.
 >
 > Prereqs: Chapters 09–10, plus the build/run/preview-override moves from
 > Chapter 07's setup section. Work on a branch; several of these are
-> deliberately throwaway.
+> deliberately throwaway. After finishing, skim Chapter 13 and re-check which
+> exercises the landed types make obsolete.
 
 ---
 
