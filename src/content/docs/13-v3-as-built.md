@@ -28,7 +28,7 @@ Public notarization / Sparkle (Track 2) is still ahead.
 | **19** | Fold-window identity | Every rendered window carries the real winning `state.d` session; Prune/labels/mode chip follow it |
 | **20** | Sticky slice timestamps | `prompt_started_at` / `session_started_at` / `errored_since` / `turn_ended_at` on slices; PromptTimer + Sessions "Started" |
 
-Speak the map: **16 gives vocabulary and filing, 17 makes three skins share machinery, 18 makes pool policy pure, 19 stops discarding the winner behind a fold, 20 stops trusting in-memory clocks.**
+Speak the map: **16 gives vocabulary and filing, 17 makes three skins share machinery, 18 makes pool policy pure, 19 stops discarding the winner behind a fold, 20 stops trusting in-memory clocks.** The dictionary for that vocabulary — slice vs WindowKey vs lifecycle vs activity, drawers, pool verbs — lives in [Chapter 19](/19-v3-domain-language/).
 
 🗣️ **In plain English.** v3 didn't rewrite the pet app. It sorted the filing
 cabinet, gave the three kinds of window real names, built the right-click

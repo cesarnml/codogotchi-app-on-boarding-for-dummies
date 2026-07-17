@@ -118,6 +118,7 @@ export default defineConfig({
             { label: '16 — Procedural Effects Deep-Dive', slug: '16-procedural-effects-deep-dive' },
             { label: '17 — The ~/.codogotchi Disk Contract', slug: '17-disk-contract' },
             { label: '18 — App Store: What Would Have to Change', slug: '18-app-store-requirements' },
+            { label: '19 — v3 Domain Language', slug: '19-v3-domain-language' },
           ],
         },
       ],
