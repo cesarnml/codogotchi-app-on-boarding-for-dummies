@@ -19,7 +19,7 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 
 ## The one-sentence mental model
 
-> **The Swift app is a pure-ish render function over a file on disk.** A separate process (the CLI hook) writes `~/.codogotchi/state.json`; the app polls that file once a second and turns whatever it reads into pixels. In FP terms: `render : StateOnDisk → (MenubarIcon, FloatingPet?)` — run at 1 Hz.
+> **The Swift app is a pure-ish render function over files on disk.** A separate process (the CLI hook) writes per-session slices under `~/.codogotchi/state.d/`; the app polls that directory once a second and turns whatever it reads into pixels. In FP terms: `render : StateOnDisk → (MenubarIcon, FloatingPet?)` — run at 1 Hz.
 
 <CardGrid>
   <Card title="Core pipeline (01–06)" icon="open-book">
@@ -54,5 +54,5 @@ Reading this guide gets you the mental model. Here's how to turn that into a mer
    ```bash
    gh issue list --label "difficulty: 2"
    ```
-3. **See what v3 needs.** The [v3 Polish Roadmap discussion](https://github.com/cesarnml/codogotchi/discussions/160) lays out what's already shipped in v2.6.0 and what's still open — UX gaps, the Sessions panel, distribution/notarization, an architectural consolidation pass, and fleshing out the RPG tab. It's not a finalized scope, so if you want to argue for, against, or add a direction, that thread is the place.
+3. **See what's next.** v3 has shipped as of `v3.0.2` — notarized DMG, Sparkle auto-updates, a Homebrew cask, the Sessions panel, and the Track 4 consolidation pass, all documented in [Chapter 13](/13-v3-as-built/). The live frontier is v4: [Chapter 14](/14-v4-screensaver-mode/) covers the committed headline feature (screensaver mode) as currently planned. For general contribution surfaces, check the pinned [bug hunt](https://github.com/cesarnml/codogotchi/issues/116), [platform compatibility reports](https://github.com/cesarnml/codogotchi/issues/120), and [pet/sprite showcase](https://github.com/cesarnml/codogotchi/issues/118) issues. (The [v3 Polish Roadmap discussion](https://github.com/cesarnml/codogotchi/discussions/160) is kept for historical context on how v3's scope came together — most of what it lists has since shipped.)
 4. **Questions are welcome.** Open an issue with the `question` label, or ask in your PR — see the [Code of Conduct](https://github.com/cesarnml/codogotchi/blob/main/CODE_OF_CONDUCT.md) for the full welcome note to newcomers.
