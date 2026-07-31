@@ -68,7 +68,7 @@ becomes a build error instead of a runtime bug.
 ## Seam 2 — The factory god-closures
 
 **Symptom.** Open
-[`MenubarApp.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/MenubarApp.swift)
+[`MenubarApp.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/App/MenubarApp.swift)
 and find the two window factories passed to the pool. Each is a ~100-line
 closure wiring 8–10 callbacks (`onForceIdle`, `onAttentionDismissed`,
 `onRenameRequested`, `onPruneRequested`, `onSwitchToMinimalist` /

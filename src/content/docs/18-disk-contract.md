@@ -1,5 +1,5 @@
 ---
-title: "17 — The ~/.codogotchi Disk Contract"
+title: "18 — The ~/.codogotchi Disk Contract"
 ---
 
 > Goal: the lookup card for every file the app reads or writes. Chapters 01–02
@@ -10,7 +10,7 @@ title: "17 — The ~/.codogotchi Disk Contract"
 
 Everything lives under **`~/.codogotchi/`**, overridable with the
 `CODOGOTCHI_HOME` env var (every path below resolves through
-[`CodogotchiFolders`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/CodogotchiFolders.swift)
+[`CodogotchiFolders`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/State/CodogotchiFolders.swift)
 — tests and demo mode point it at sandboxes). Demo mode additionally polls a
 separate fixture directory and never touches the live one.
 
@@ -48,7 +48,7 @@ shape from Chapter 02 (`activity_state`, `updated_at`, `source_event`,
 optional `attention`).
 
 **Writers.** Hooks own these files. The app writes back in exactly three
-narrow cases ([`StateJsonWriter`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/StateJsonWriter.swift)),
+narrow cases ([`StateJsonWriter`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/State/StateJsonWriter.swift)),
 always scoped to the clicked window's slice(s), never the whole directory:
 
 | Write-back | Trigger | Touches stale slices? |
@@ -78,7 +78,7 @@ menu-open), rename label swept later. This is exactly what right-click
 ## `customization.json` — display settings
 
 Full key table (defaults in
-[`CustomizationJsonReader`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/CustomizationJsonReader.swift)):
+[`CustomizationJsonReader`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/State/CustomizationJsonReader.swift)):
 
 | Key | Meaning | Default |
 | --- | --- | --- |
@@ -139,7 +139,7 @@ Payloads carry their own expiry.
 
 **`state-transitions.log`** and **`gate-transitions.log`** — NDJSON, one line
 per observed transition plus a periodic heartbeat
-([`TransitionLog`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/TransitionLog.swift)).
+([`TransitionLog`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/State/TransitionLog.swift)).
 Nothing reads them programmatically; they exist for humans debugging "what
 did the app think happened."
 

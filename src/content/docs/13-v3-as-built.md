@@ -28,7 +28,7 @@ Public notarization / Sparkle (Track 2) is still ahead.
 | **19** | Fold-window identity | Every rendered window carries the real winning `state.d` session; Prune/labels/mode chip follow it |
 | **20** | Sticky slice timestamps | `prompt_started_at` / `session_started_at` / `errored_since` / `turn_ended_at` on slices; PromptTimer + Sessions "Started" |
 
-Speak the map: **16 gives vocabulary and filing, 17 makes three skins share machinery, 18 makes pool policy pure, 19 stops discarding the winner behind a fold, 20 stops trusting in-memory clocks.** The dictionary for that vocabulary — slice vs WindowKey vs lifecycle vs activity, drawers, pool verbs — lives in [Chapter 19](/19-v3-domain-language/).
+Speak the map: **16 gives vocabulary and filing, 17 makes three skins share machinery, 18 makes pool policy pure, 19 stops discarding the winner behind a fold, 20 stops trusting in-memory clocks.** The dictionary for that vocabulary — slice vs WindowKey vs lifecycle vs activity, drawers, pool verbs — lives in [Chapter 20](/20-v3-domain-language/).
 
 🗣️ **In plain English.** v3 didn't rewrite the pet app. It sorted the filing
 cabinet, gave the three kinds of window real names, built the right-click
@@ -65,18 +65,18 @@ labeled drawers. Same app; you can find things by *what layer they are*.
 
 | Ch.10 seam | v3 shape that landed | Where to look |
 | --- | --- | --- |
-| **1 — Stringly-typed window keys** | `WindowKey` enum (`.origin` / `.session` / `.combined`), parsed once at the pool boundary; `rawValue` is serialization only | [`WindowKey.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/Pool/WindowKey.swift) |
-| **2 — Factory god-closures** | `WindowActionRouter` owns targeting; factories wire `panel.onX = { router.handle(…) }` | [`WindowActionRouter.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/Pool/WindowActionRouter.swift) |
-| **3 — Three-surface parity by hand** | One prompt builder + dismissal stack; `ChromeFlockCoordinator` for chrome formation; capability matrix documents intentional skin differences | [`FloatingPetPromptBuilder.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/Windows/FloatingPetPromptBuilder.swift), [`ChromeFlockCoordinator.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/Windows/ChromeFlockCoordinator.swift), `docs/contracts/window-capability-matrix.md` |
-| **4 — `update()` mixes policy + effects** | `PoolDerive.derive` → `PoolDiff` → `PoolApply`; no AppKit in derive; legacy pipeline deleted after shadow cutover | `Pool/Derive/`, [`PoolApply.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/Pool/PoolApply.swift) |
-| **5 — Config writers multiplying** | Single `CustomizationStore` (read-merge-write + change publication); Settings VM is an adapter | [`CustomizationStore.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/State/CustomizationStore.swift) |
+| **1 — Stringly-typed window keys** | `WindowKey` enum (`.origin` / `.session` / `.combined`), parsed once at the pool boundary; `rawValue` is serialization only | [`WindowKey.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/Pool/WindowKey.swift) |
+| **2 — Factory god-closures** | `WindowActionRouter` owns targeting; factories wire `panel.onX = { router.handle(…) }` | [`WindowActionRouter.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/Pool/WindowActionRouter.swift) |
+| **3 — Three-surface parity by hand** | One prompt builder + dismissal stack; `ChromeFlockCoordinator` for chrome formation; capability matrix documents intentional skin differences | [`FloatingPetPromptBuilder.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/Windows/FloatingPetPromptBuilder.swift), [`ChromeFlockCoordinator.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/Windows/ChromeFlockCoordinator.swift), `docs/contracts/window-capability-matrix.md` |
+| **4 — `update()` mixes policy + effects** | `PoolDerive.derive` → `PoolDiff` → `PoolApply`; no AppKit in derive; legacy pipeline deleted after shadow cutover | `Pool/Derive/`, [`PoolApply.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/Pool/PoolApply.swift) |
+| **5 — Config writers multiplying** | Single `CustomizationStore` (read-merge-write + change publication); Settings VM is an adapter | [`CustomizationStore.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/State/CustomizationStore.swift) |
 | **6 — Flat `Sources/`** | The six drawers above | — |
-| **Case study — implicit lifecycle** | `SessionLifecycle` classifier + Settings > Sessions consuming it; fold identity + sticky stamps close the "Show Pet did nothing"/timer-lie classes | [`SessionLifecycle.swift`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/Pool/SessionLifecycle.swift) |
+| **Case study — implicit lifecycle** | `SessionLifecycle` classifier + Settings > Sessions consuming it; fold identity + sticky stamps close the "Show Pet did nothing"/timer-lie classes | [`SessionLifecycle.swift`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/Pool/SessionLifecycle.swift) |
 
 Not every Track 1 UX gap or Track 2 distribution item is done — only the
 **consolidation** seams Chapter 10 argued for. Distribution (notarize →
 Sparkle → cask → App Store investigation) remains the v3 public-ship work;
-see [Chapter 18](/18-app-store-requirements/).
+see [Chapter 19](/19-app-store-requirements/).
 
 🗣️ **In plain English.** Chapter 10's wish list mostly shipped. Pets still
 look and behave like Chapter 09; the difference is that the compiler, one
@@ -99,8 +99,8 @@ flowchart TD
     wk -->|rawValue| disk["app-state.json / labels / menus"]
 ```
 
-1. **Slice key** — still `origin:session_id` on disk ([Chapter 17](/17-disk-contract/)).
-2. **Render key** — still what [`RenderKeyResolver`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/Pool/RenderKeyResolver.swift) hands the pool after consulting customization.
+1. **Slice key** — still `origin:session_id` on disk ([Chapter 18](/18-disk-contract/)).
+2. **Render key** — still what [`RenderKeyResolver`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/Pool/RenderKeyResolver.swift) hands the pool after consulting customization.
 3. **Window key** — now a `WindowKey` value. String form survives only for
    persistence and fixtures. Policy sites `switch` the enum.
 
@@ -221,12 +221,12 @@ Phase 20 bumped the slice contract with sticky optional stamps:
 | `turn_ended_at` | frozen/ended turn clock |
 
 Hooks set/clear/preserve them on lifecycle edges (not every mid-turn tool
-tick). [`PromptTimer`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/Windows/PromptTimer.swift)
+tick). [`PromptTimer`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/Windows/PromptTimer.swift)
 hydrates from disk; Settings > Sessions shows relative **Started …** when
 `session_started_at` exists. Shipped lockstep with contracts, hook binary,
 and five installers — refresh hooks with the app (release notes, no in-app
 outdated-hooks banner yet). Full field tables remain in
-[Chapter 17](/17-disk-contract/).
+[Chapter 18](/18-disk-contract/).
 
 🗣️ **In plain English.** Timers and "when did this session start?" now live on
 the sticky notes themselves. Hiding a pet, folding winners, or restarting the
@@ -260,7 +260,7 @@ v3 as-built *adds* for a daily driver:
 - Shared prompts and chrome coordinator (parity is structural)
 
 Still open for the *public* v3 release: notarized DMG, Sparkle, Homebrew
-cask, and the App Store investigation ([Chapter 18](/18-app-store-requirements/),
+cask, and the App Store investigation ([Chapter 19](/19-app-store-requirements/),
 [Chapter 12](/12-v3-learning-resources/) Tier 1–2).
 
 ---

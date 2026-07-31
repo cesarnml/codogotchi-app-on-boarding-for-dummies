@@ -1,5 +1,5 @@
 ---
-title: "19 — v3 Domain Language"
+title: "20 — v3 Domain Language"
 ---
 
 > Goal: the lookup card for the **names** Codogotchi v3.0.0 uses when it
@@ -187,7 +187,7 @@ Buckets (not separate types — just how humans cluster them):
 | SoA / gate | `ticket_started`, `red_tdd`, `green_tdd`, `adversarial_review`, … |
 
 Canonical contract (schema **v10** as of Phase 20 / v3): 
-[`animation-state-vocabulary.md`](https://github.com/cesarnml/codogotchi/blob/main/docs/contracts/animation-state-vocabulary.md).
+[`animation-state-vocabulary.md`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/docs/contracts/animation-state-vocabulary.md).
 Pedagogy: [Chapter 02](/02-the-data-contract/).
 
 ---
@@ -206,7 +206,7 @@ stopwatches:
 
 Hooks **set / clear / preserve** on lifecycle edges; mid-turn tool ticks
 preserve. PromptTimer hydrates from disk. File catalog:
-[Chapter 17](/17-disk-contract/).
+[Chapter 18](/18-disk-contract/).
 
 ---
 
@@ -260,7 +260,7 @@ Pool still re-reads customization each tick.
 | How v3 landed these names | [13 — v3 As Built](/13-v3-as-built/) |
 | Pre-enum key ladder & pool product rules | [09 — v2 As Built](/09-v2-as-built/) |
 | Why the types existed | [10 — The Seams](/10-the-seams-v3-redesign/) |
-| Every file under `~/.codogotchi/` | [17 — Disk Contract](/17-disk-contract/) |
+| Every file under `~/.codogotchi/` | [18 — Disk Contract](/18-disk-contract/) |
 | Activity-state pedagogy | [02 — The Data Contract](/02-the-data-contract/) |
 
 🗣️ **In plain English.** v3.0.0's domain language is small on purpose: slices,

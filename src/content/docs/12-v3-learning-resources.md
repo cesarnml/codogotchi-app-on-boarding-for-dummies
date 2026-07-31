@@ -77,7 +77,7 @@ Ruby. Search: `homebrew cask cookbook new cask pr`.
 
 ## Tier 2 — The App Store investigation
 
-> Start with [Chapter 18](/18-app-store-requirements/) — the requirements
+> Start with [Chapter 19](/19-app-store-requirements/) — the requirements
 > primer grounded in this codebase — then use these for depth.
 
 **8. App Sandbox documentation (Apple) — entitlements, security-scoped

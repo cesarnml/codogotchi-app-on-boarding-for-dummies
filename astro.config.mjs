@@ -19,20 +19,31 @@ function remarkMermaid() {
 
 export default defineConfig({
   site: 'https://codogotchifordummies.vercel.app',
-  // Chapter renumbering (v3 restructure + v3-as-built insert): old slugs →
-  // new homes, so inbound links and bookmarks keep working.
+  // Chapter renumbering (v3 restructure + v3-as-built insert + v4-roadmap
+  // insert): old slugs → current homes, so inbound links and bookmarks keep
+  // working. Every entry points straight at the CURRENT slug (no chained
+  // hops), so each bump rewrites prior entries' targets rather than layering
+  // a new hop on top.
   redirects: {
-    '/09-dev-workflow-shell-helpers': '/14-dev-workflow-shell-helpers',
-    '/10-macos-primitives-primer': '/15-macos-primitives-primer',
-    '/11-procedural-effects-deep-dive': '/16-procedural-effects-deep-dive',
+    '/09-dev-workflow-shell-helpers': '/15-dev-workflow-shell-helpers',
+    '/10-macos-primitives-primer': '/16-macos-primitives-primer',
+    '/11-procedural-effects-deep-dive': '/17-procedural-effects-deep-dive',
     '/12-v2-as-built': '/09-v2-as-built',
     '/13-the-seams-v3-redesign': '/10-the-seams-v3-redesign',
     // Reference block bumped +1 when Chapter 13 (v3 as built) landed
-    '/13-dev-workflow-shell-helpers': '/14-dev-workflow-shell-helpers',
-    '/14-macos-primitives-primer': '/15-macos-primitives-primer',
-    '/15-procedural-effects-deep-dive': '/16-procedural-effects-deep-dive',
-    '/16-disk-contract': '/17-disk-contract',
-    '/17-app-store-requirements': '/18-app-store-requirements',
+    '/13-dev-workflow-shell-helpers': '/15-dev-workflow-shell-helpers',
+    '/14-macos-primitives-primer': '/16-macos-primitives-primer',
+    '/15-procedural-effects-deep-dive': '/17-procedural-effects-deep-dive',
+    '/16-disk-contract': '/18-disk-contract',
+    '/17-app-store-requirements': '/19-app-store-requirements',
+    // Reference block + Chapter 19 bumped +1 when Chapter 14 (v4 roadmap:
+    // screensaver mode) landed
+    '/14-dev-workflow-shell-helpers': '/15-dev-workflow-shell-helpers',
+    '/15-macos-primitives-primer': '/16-macos-primitives-primer',
+    '/16-procedural-effects-deep-dive': '/17-procedural-effects-deep-dive',
+    '/17-disk-contract': '/18-disk-contract',
+    '/18-app-store-requirements': '/19-app-store-requirements',
+    '/19-v3-domain-language': '/20-v3-domain-language',
   },
   markdown: {
     remarkPlugins: [remarkMermaid],
@@ -111,14 +122,20 @@ export default defineConfig({
           ],
         },
         {
+          label: 'v4 roadmap',
+          items: [
+            { label: '14 — Where v4 is Going: Screensaver Mode', slug: '14-v4-screensaver-mode' },
+          ],
+        },
+        {
           label: 'Reference',
           items: [
-            { label: '14 — Dev-Workflow Shell Helpers', slug: '14-dev-workflow-shell-helpers' },
-            { label: '15 — macOS Primitives Primer', slug: '15-macos-primitives-primer' },
-            { label: '16 — Procedural Effects Deep-Dive', slug: '16-procedural-effects-deep-dive' },
-            { label: '17 — The ~/.codogotchi Disk Contract', slug: '17-disk-contract' },
-            { label: '18 — App Store: What Would Have to Change', slug: '18-app-store-requirements' },
-            { label: '19 — v3 Domain Language', slug: '19-v3-domain-language' },
+            { label: '15 — Dev-Workflow Shell Helpers', slug: '15-dev-workflow-shell-helpers' },
+            { label: '16 — macOS Primitives Primer', slug: '16-macos-primitives-primer' },
+            { label: '17 — Procedural Effects Deep-Dive', slug: '17-procedural-effects-deep-dive' },
+            { label: '18 — The ~/.codogotchi Disk Contract', slug: '18-disk-contract' },
+            { label: '19 — App Store: What Would Have to Change', slug: '19-app-store-requirements' },
+            { label: '20 — v3 Domain Language', slug: '20-v3-domain-language' },
           ],
         },
       ],

@@ -32,7 +32,7 @@ Each slice is still the schema-6 shape you know from Chapter 02
 (`activity_state`, `updated_at`, `source_event.origin`, optional `attention`) —
 the multiplexing moved **out of the JSON and into the filename**. The filename
 is authoritative: `origin:session_id.json`, parsed by
-[`StateJsonReader.parseSliceFilename`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/StateJsonReader.swift)
+[`StateJsonReader.parseSliceFilename`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/State/StateJsonReader.swift)
 (a plain `origin.json` parses as session `"default"`).
 
 🇹🇸 **TS analogy.** v1 was a single mutable variable that concurrent writers
@@ -45,7 +45,7 @@ same single sticky note, so they kept overwriting each other. In v2, each tool
 it. Nobody overwrites anybody; the app just reads the whole folder.
 
 (The complete file-by-file catalog — writers, readers, clocks, delete-safety
-— lives in [Chapter 17](/17-disk-contract/); this chapter narrates, that page
+— lives in [Chapter 18](/18-disk-contract/); this chapter narrates, that page
 owns the tables.)
 
 Two readers consume the directory, both applying a **2-hour mtime staleness
@@ -75,7 +75,7 @@ flowchart TD
 2. **Render key** — what the polling driver hands the pool after consulting
    `customization.json`: session-keyed if that origin has session pets on,
    plain origin otherwise
-   ([`RenderKeyResolver`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/RenderKeyResolver.swift)).
+   ([`RenderKeyResolver`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/Pool/RenderKeyResolver.swift)).
 3. **Window key** — the pool's unit of "one floating window". Same as the
    render key, except every combined-mode origin folds into the **literal
    string `"combined"`**.
@@ -95,7 +95,7 @@ window." The app tells these apart by inspecting the spelling of a text label
 
 Everything the pool decides per tick is parameterized by one JSON file, read
 fresh every tick via
-[`CustomizationJsonReader`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/CustomizationJsonReader.swift):
+[`CustomizationJsonReader`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/State/CustomizationJsonReader.swift):
 
 | Key | Drives |
 | --- | --- |
@@ -125,7 +125,7 @@ anything needing to tell anything else.
 ## The pool: `FloatingPetWindowPool.update()`
 
 The heart of v2 is one method:
-[`FloatingPetWindowPool.update(snapshot:)`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/FloatingPetWindowPool.swift),
+[`FloatingPetWindowPool.update(snapshot:)`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/Pool/FloatingPetWindowPool.swift),
 called once per poll tick with the reader's snapshot. It is an imperative,
 numbered pipeline (Steps 3–8 with lettered sub-steps). Roughly:
 
@@ -187,7 +187,7 @@ factories and three effective shapes:
 | **Combined** | Whichever of the above `combined_minimalist_enabled` selects, keyed `"combined"` | Same as its renderer |
 
 Every piece of chrome is **its own floating `NSPanel`**, re-anchored to the pet
-panel on drags and poll ticks (Chapter 15 explains why). Right-click anywhere
+panel on drags and poll ticks (Chapter 16 explains why). Right-click anywhere
 on a window's chrome routes into one shared prompt
 (`FloatingPetHidePrompt` pills: Force Idle / Rename / Prune / mode switch /
 Panel Size / Hide), coordinated across windows by
@@ -229,10 +229,10 @@ stateDiagram-v2
 | --- | --- | --- |
 | Dismiss TTL (idle-frozen) | pool `update()` | 300s, user-configurable, `0` = never |
 | Reader staleness | `StateJsonReader` mtime filter | 2h, hard-coded |
-| Prune horizon | [`SlicePruner`](https://github.com/cesarnml/codogotchi/blob/main/apps/menubar/Sources/SlicePruner.swift) | 24h, 30-min timer |
+| Prune horizon | [`SlicePruner`](https://github.com/cesarnml/codogotchi/blob/archive/v3.0.2/apps/menubar/Sources/State/SlicePruner.swift) | 24h, 30-min timer |
 
 (These clocks and the full `customization.json` key reference are maintained
-in [Chapter 17](/17-disk-contract/) — treat that page as canonical if the two
+in [Chapter 18](/18-disk-contract/) — treat that page as canonical if the two
 ever disagree.)
 
 The v3 **Sessions panel** is essentially this diagram as UI (Active / Live /
