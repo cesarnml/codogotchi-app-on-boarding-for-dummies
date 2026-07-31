@@ -15,34 +15,35 @@ hero:
       icon: rocket
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { CardGrid } from '@astrojs/starlight/components';
+import ChapterCard from '../../components/ChapterCard.astro';
 
 ## The one-sentence mental model
 
 > **The Swift app is a pure-ish render function over files on disk.** A separate process (the CLI hook) writes per-session slices under `~/.codogotchi/state.d/`; the app polls that directory once a second and turns whatever it reads into pixels. In FP terms: `render : StateOnDisk → (MenubarIcon, FloatingPet?)` — run at 1 Hz.
 
 <CardGrid>
-  <Card title="Core pipeline (01–06)" icon="open-book">
+  <ChapterCard title="Core pipeline (01–06)" icon="open-book" href="/01-the-big-picture/">
     Maps the state → render spine you need to understand v2. Read in order — each chapter ends with a "prove it to yourself" exercise.
-  </Card>
-  <Card title="v2 as built → seams (09–10)" icon="puzzle">
+  </ChapterCard>
+  <ChapterCard title="v2 as built → seams (09–10)" icon="puzzle" href="/09-v2-as-built/">
     The shipped v2 architecture — state.d slices, the window pool, the session lifecycle — then a critical read of its seams and the v3 redesign they motivated.
-  </Card>
-  <Card title="Hands-on, both eras (07–08 · 11–12)" icon="rocket">
+  </ChapterCard>
+  <ChapterCard title="Hands-on, both eras (07–08 · 11–12)" icon="rocket" href="/07-challenges/">
     Tiered-hint challenges and curated resources: 07–08 ramped v1 → v2; 11–12 do the same for v2 → v3 (seam-breaking exercises, notarization/Sparkle reading).
-  </Card>
-  <Card title="v3 as built (13)" icon="approve-check">
+  </ChapterCard>
+  <ChapterCard title="v3 as built (13)" icon="approve-check" href="/13-v3-as-built/">
     What phases 16–20 actually landed — typed WindowKey, drawers, derive/diff/apply, fold identity, sticky slice clocks — and how Chapter 10's seams were closed.
-  </Card>
-  <Card title="v4 roadmap (14)" icon="rocket">
+  </ChapterCard>
+  <ChapterCard title="v4 roadmap (14)" icon="rocket" href="/14-v4-screensaver-mode/">
     Where v4 is going: Screensaver Mode. Codogotchi as a real macOS screensaver — the disk contract already supports it, the trigger decision, the sandbox constraints, and the fullscreen panel-layout design problem.
-  </Card>
-  <Card title="Reference (15–20)" icon="laptop">
+  </ChapterCard>
+  <ChapterCard title="Reference (15–20)" icon="laptop" href="/15-dev-workflow-shell-helpers/">
     Dev helpers, platform APIs (NSPanel, SpriteKit, AppKit), the procedural-effects engine, the ~/.codogotchi disk contract, the App Store requirements primer, and the v3.0.0 domain-language dictionary.
-  </Card>
-  <Card title="Swift for TS devs (05)" icon="translate">
+  </ChapterCard>
+  <ChapterCard title="Swift for TS devs (05)" icon="translate" href="/05-swift-and-appkit-for-ts-devs/">
     Maps every Swift idiom you'll trip over — `@MainActor`, `weak self`, protocols, `Result` — to a TypeScript equivalent you already know.
-  </Card>
+  </ChapterCard>
 </CardGrid>
 
 ## Ready to actually contribute?

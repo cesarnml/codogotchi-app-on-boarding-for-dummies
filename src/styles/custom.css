@@ -256,6 +256,26 @@ article.card:hover {
   color: var(--cg-text) !important;
 }
 
+/* Chapter-card title links (see src/components/ChapterCard.astro).
+   The whole card is a link, so the title must read as card ink at rest to
+   preserve the sticker look, then shift to the accent on hover. These need
+   to out-specify Starlight's `.sl-markdown-content a` rules and this file's
+   own in-content link hover, hence the long selectors. */
+:root[data-theme='light'] .sl-markdown-content article.card .title a {
+  color: var(--cg-text);
+}
+:root[data-theme='light'] .sl-markdown-content article.card:hover .title a,
+:root[data-theme='light'] .sl-markdown-content article.card .title a:hover {
+  color: var(--sl-color-accent-high);
+}
+:root[data-theme='dark'] .sl-markdown-content article.card .title a {
+  color: var(--cg-text-lt);
+}
+:root[data-theme='dark'] .sl-markdown-content article.card:hover .title a,
+:root[data-theme='dark'] .sl-markdown-content article.card .title a:hover {
+  color: var(--cg-terracotta-lt);
+}
+
 /* ── Blockquote ───────────────────────────────────────────────────────────── */
 .sl-markdown-content blockquote {
   border-left: 4px solid var(--cg-terracotta) !important;
@@ -362,6 +382,29 @@ div.mermaid {
 /* In-content links — terracotta at rest, darker terracotta on hover. */
 :root[data-theme='light'] .sl-markdown-content a:hover:not(:where(.not-content *)) {
   color: var(--sl-color-accent-high);
+}
+
+/* ── Reduced motion (WCAG 2.3.3, Animation from Interactions) ────────────── */
+/* The sticker aesthetic nudges cards and buttons on hover/active. That is
+   motion triggered by interaction, so it must be suppressible. Needs
+   !important only because the rules it overrides use it. */
+@media (prefers-reduced-motion: reduce) {
+  article.card,
+  a.sl-link-button,
+  a.sl-link-button.primary,
+  .sl-link-button[data-variant='primary'],
+  .sl-link-button[data-variant='minimal'] {
+    transition: none !important;
+  }
+  article.card:hover,
+  a.sl-link-button:hover,
+  a.sl-link-button:active,
+  a.sl-link-button.primary:hover,
+  a.sl-link-button.primary:active,
+  .sl-link-button[data-variant='primary']:hover,
+  .sl-link-button[data-variant='primary']:active {
+    transform: none !important;
+  }
 }
 
 /* ── Mobile theme toggle ─────────────────────────────────────────────────── */
